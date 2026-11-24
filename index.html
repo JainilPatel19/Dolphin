@@ -10,20 +10,21 @@
 <style>
 :root{
   /* Layout: sticky top bar, summary tiles, attention panel beside category breakdown, then a dense operable item table. */
-  --bg:#f3f5f9; --surface:#ffffff; --ink:#18212f; --muted:#667085; --line:#e3e8ef; --accent:#0b3d91; --accent-soft:#e6edf9;
-  --red:#c42b2b; --red-soft:#fdecec; --amber:#b26a00; --amber-soft:#fff4e0; --green:#18794e; --green-soft:#e6f5ec; --grey-soft:#f0f2f6;
-  --display:"Nunito",system-ui,sans-serif; --body:"Nunito",system-ui,sans-serif; --brand:#0a2e6e; --brand-2:#1764d8; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --bg:#eef3fb; --surface:#ffffff; --ink:#14213d; --muted:#5b6b85; --line:#dfe6f2; --accent:#1764d8; --accent-soft:#e6f0ff;
+  --red:#dc2626; --red-soft:#fee8e8; --amber:#d97706; --amber-soft:#fff3dc; --green:#059669; --green-soft:#ddf7ec; --grey-soft:#eef2f8;
+  --violet:#6d4bd8; --teal:#0e9488;
+  --display:"Nunito",system-ui,sans-serif; --body:"Nunito",system-ui,sans-serif; --brand:#0b3fa8; --brand-2:#4da3ff; --mono:"IBM Plex Mono",ui-monospace,monospace;
   --shadow:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0e131c; --surface:#161d29; --ink:#e6ebf3; --muted:#93a0b4; --line:#263042; --accent:#5b93f5; --accent-soft:#1a2a47;
   --red:#f07171; --red-soft:#3a1c1f; --amber:#f0b04a; --amber-soft:#3a2b12; --green:#4cc38a; --green-soft:#12301f; --grey-soft:#1d2533;
-  --shadow:none; color-scheme:dark;}}
+  --violet:#a48bff; --teal:#3cc9b8; --shadow:none; color-scheme:dark;}}
 :root[data-theme="dark"]{
   --bg:#0e131c; --surface:#161d29; --ink:#e6ebf3; --muted:#93a0b4; --line:#263042; --accent:#5b93f5; --accent-soft:#1a2a47;
   --red:#f07171; --red-soft:#3a1c1f; --amber:#f0b04a; --amber-soft:#3a2b12; --green:#4cc38a; --green-soft:#12301f; --grey-soft:#1d2533;
-  --shadow:none; color-scheme:dark;}
+  --violet:#a48bff; --teal:#3cc9b8; --shadow:none; color-scheme:dark;}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--body)}
@@ -33,7 +34,7 @@ button,input,select{font:inherit;color:inherit}
 .wrap{max-width:1320px;margin:0 auto;padding:0 20px 48px}
 
 /* top bar */
-.top{position:sticky;top:0;z-index:20;background:var(--brand);border-bottom:3px solid var(--brand-2);color:#fff}
+.top{position:sticky;top:0;z-index:20;background:linear-gradient(90deg,#0a3a9c 0%,#1460d0 60%,#1f7aea 100%);border-bottom:3px solid var(--brand-2);color:#fff;box-shadow:0 4px 18px rgba(23,100,216,.25)}
 .top .brand small,.top .brand small *{color:rgba(255,255,255,.72)}
 .top .logo{background:#fff;color:var(--brand)}
 .top .tab{color:rgba(255,255,255,.78)}
@@ -49,7 +50,7 @@ button,input,select{font:inherit;color:inherit}
 .top .bell .badge{border:2px solid var(--brand)}
 .top .wrap{display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
-.logo{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;color:#fff}
+.logo{width:34px;height:34px;border-radius:9px;background:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.15);display:grid;place-items:center;color:#fff}
 .brand h1{font:800 18px/1.1 var(--display);margin:0;letter-spacing:-.01em}
 .brand small{display:block;color:var(--muted);font-size:12px}
 .btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 13px;cursor:pointer;font-weight:500;white-space:nowrap}
@@ -74,14 +75,24 @@ button,input,select{font:inherit;color:inherit}
 .tile .k{font-size:12px;color:var(--muted);font-weight:500}
 .tile .v{font:800 26px/1.15 var(--display);margin-top:4px;font-variant-numeric:tabular-nums}
 .tile .s{font-size:12px;color:var(--muted);margin-top:2px}
+.tile{border-top:4px solid var(--tc,var(--accent));position:relative}
 .tile.warn .v{color:var(--amber)} .tile.crit .v{color:var(--red)}
+.tile.warn{--tc:var(--amber)} .tile.crit{--tc:var(--red)}
+.tile.c-blue{--tc:var(--accent)} .tile.c-blue .v{color:var(--accent)}
+.tile.c-green{--tc:var(--green)} .tile.c-green .v{color:var(--green)}
+.tile.c-violet{--tc:var(--violet)} .tile.c-violet .v{color:var(--violet)}
+.tile.c-teal{--tc:var(--teal)} .tile.c-teal .v{color:var(--teal)}
+.tile.c-amber{--tc:var(--amber)} .tile.c-red{--tc:var(--red)}
+.tile.click:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(23,100,216,.12)}
+.tile{transition:transform .12s,box-shadow .12s}
 .tile .meter{height:6px;border-radius:3px;background:var(--grey-soft);margin-top:8px;overflow:hidden;display:flex}
 .tile .meter i{display:block;height:100%}
 
 /* two panel row */
 .row2{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-top:16px}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.panel h2{font:700 15px/1.2 var(--display);margin:0}
+.panel h2{font:800 15.5px/1.2 var(--display);margin:0;color:var(--ink)}
+.panel>.ph{background:linear-gradient(180deg,color-mix(in srgb,var(--accent-soft) 55%,var(--surface)),var(--surface))}
 .ph{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .ph .sub{color:var(--muted);font-size:12.5px;margin-left:auto}
 .alist{max-height:420px;overflow:auto}
@@ -89,7 +100,7 @@ button,input,select{font:inherit;color:inherit}
 .aitem:last-child{border-bottom:0}
 .aitem .nm{font-weight:600}
 .aitem .cat{font-size:12px;color:var(--muted)}
-.bar{height:8px;border-radius:4px;background:var(--grey-soft);overflow:hidden}
+.bar{height:8px;border-radius:4px;background:color-mix(in srgb,var(--accent-soft) 80%,var(--grey-soft));overflow:hidden}
 .bar i{display:block;height:100%;border-radius:4px}
 .aitem .lbl{font-size:12px;color:var(--muted);margin-top:4px}
 .need{font-size:12.5px;text-align:right;font-weight:600}
@@ -110,7 +121,7 @@ button,input,select{font:inherit;color:inherit}
 .search svg{position:absolute;left:10px;top:9px;width:16px;height:16px;color:var(--muted)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:5px 11px;font-size:13px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
 .chip .c{opacity:.65;margin-left:4px}
 select.sel{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:var(--surface)}
 .bulk{display:none;align-items:center;gap:10px;padding:10px 16px;background:var(--accent-soft);border-bottom:1px solid var(--line);flex-wrap:wrap}
@@ -118,7 +129,7 @@ select.sel{border:1px solid var(--line);border-radius:9px;padding:7px 10px;backg
 .bulk input{width:70px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .tblwrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:900px}
-th{font-size:12px;font-weight:600;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;white-space:nowrap;user-select:none}
+th{font-size:12px;font-weight:700;color:color-mix(in srgb,var(--accent) 70%,var(--ink));text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--accent-soft) 70%,var(--surface));position:sticky;top:0;white-space:nowrap;user-select:none}
 th.sort{cursor:pointer}th.sort:hover{color:var(--ink)}
 th .ar{opacity:.5;margin-left:3px}
 td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
@@ -216,7 +227,7 @@ a.po{font-family:var(--mono);font-size:12.5px;font-weight:500}
 .mi:placeholder-shown{border-style:dashed}
 .seg{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
 .seg button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
 .flow{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap}
 .flow .step{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 .flow .step b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:13px}
@@ -400,8 +411,8 @@ var INV = (function () {
     var s = summarize(items, mins), groups = byCategory(items);
     var doc = new jsPDF({ unit: "pt", format: "letter" });
     var W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 40;
-    var NAVY = [10, 46, 110], BLUE = [23, 100, 216], INK = [28, 35, 48], MUTED = [104, 115, 133], LINE = [225, 230, 238],
-        RED = [190, 38, 38], AMBER = [181, 108, 0], GREEN = [24, 122, 72], TINT = [244, 247, 252];
+    var NAVY = [11, 63, 168], BLUE = [77, 163, 255], INK = [28, 35, 48], MUTED = [104, 115, 133], LINE = [225, 230, 238],
+        RED = [220, 38, 38], AMBER = [217, 119, 6], GREEN = [5, 150, 105], TINT = [244, 247, 252];
     var dateStr = when.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) + "  " +
       when.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
@@ -504,7 +515,7 @@ var INV = (function () {
     y = sectionTitle("Full inventory", s.products + " products  |  " + s.units + " units", y);
     var body = [];
     groups.forEach(function (g) {
-      body.push([{ content: g.name + "   (" + g.items.length + " products, " + money(g.value) + ")", colSpan: 8, styles: { fillColor: [222, 232, 248], textColor: NAVY, fontStyle: "bold", fontSize: 8.5 } }]);
+      body.push([{ content: g.name + "   (" + g.items.length + " products, " + money(g.value) + ")", colSpan: 8, styles: { fillColor: [224, 236, 255], textColor: NAVY, fontStyle: "bold", fontSize: 8.5 } }]);
       g.items.forEach(function (it) {
         var m = mins[it.name], st = status(it, m);
         body.push([it.name, it.total, it.available, it.assigned, m != null ? m : "-", st.label, money(it.cost), money(it.total * it.cost)]);
@@ -551,8 +562,8 @@ var INV = (function () {
     var s = summarize(items, mins);
     var doc = new jsPDF({ unit: "pt", format: "letter" });
     var W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 40;
-    var NAVY = [10, 46, 110], BLUE = [23, 100, 216], INK = [28, 35, 48], MUTED = [104, 115, 133], LINE = [225, 230, 238],
-        RED = [190, 38, 38], AMBER = [181, 108, 0], GREEN = [24, 122, 72], TINT = [244, 247, 252];
+    var NAVY = [11, 63, 168], BLUE = [77, 163, 255], INK = [28, 35, 48], MUTED = [104, 115, 133], LINE = [225, 230, 238],
+        RED = [220, 38, 38], AMBER = [217, 119, 6], GREEN = [5, 150, 105], TINT = [244, 247, 252];
     function fill(c) { doc.setFillColor(c[0], c[1], c[2]); } function ink(c) { doc.setTextColor(c[0], c[1], c[2]); } function draw(c) { doc.setDrawColor(c[0], c[1], c[2]); }
     var dateStr = when.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     var timeStr = when.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
@@ -612,7 +623,7 @@ var INV = (function () {
       CAT_ORDER.filter(function (c) { return groups[c]; }).forEach(function (c) {
         var g = groups[c].sort(function (a, b) { return (a.status.key === "out" ? 0 : 1) - (b.status.key === "out" ? 0 : 1) || a.item.name.localeCompare(b.item.name); });
         var gc = g.reduce(function (t, a) { return t + a.need * a.item.cost; }, 0), gu = g.reduce(function (t, a) { return t + a.need; }, 0);
-        body.push([{ content: c.toUpperCase() + "   ·   " + g.length + " item" + (g.length > 1 ? "s" : "") + ", " + gu + " units, " + money(gc), colSpan: 9, styles: { fillColor: [226, 235, 250], textColor: NAVY, fontStyle: "bold", fontSize: 8, halign: "left" } }]);
+        body.push([{ content: c.toUpperCase() + "   ·   " + g.length + " item" + (g.length > 1 ? "s" : "") + ", " + gu + " units, " + money(gc), colSpan: 9, styles: { fillColor: [224, 236, 255], textColor: NAVY, fontStyle: "bold", fontSize: 8, halign: "left" } }]);
         g.forEach(function (a) {
           var r = ["", "", a.item.name, a.status.key === "out" ? "Out" : "Low", String(a.item.available), String(a.min), String(a.need), money(a.item.cost), money(a.need * a.item.cost)];
           r._st = a.status.key; body.push(r);
@@ -630,7 +641,7 @@ var INV = (function () {
           if (d.section === "head" && d.column.index >= 4) d.cell.styles.halign = "right";
           if (d.section === "head" && d.column.index <= 1) d.cell.styles.halign = "center";
           if (d.section === "body" && d.column.index === 3 && d.row.raw._st) { d.cell.styles.textColor = d.row.raw._st === "out" ? RED : AMBER; d.cell.styles.fontStyle = "bold"; }
-          if (d.section === "body" && d.column.index === 6 && d.row.raw._st) d.cell.styles.textColor = BLUE;
+          if (d.section === "body" && d.column.index === 6 && d.row.raw._st) d.cell.styles.textColor = NAVY;
         },
         didDrawCell: function (d) {
           if (d.section === "body" && d.column.index <= 1 && d.row.raw._st) {
@@ -850,12 +861,12 @@ function vInventory(s) {
   }).join("") : '<div class="empty">Nothing below minimum.</div>';
   return '' +
     '<div class="tiles">' +
-      tile("Total units", s.units, s.products + " products") +
-      tile("Available", s.available, "on the shelf", "", "instock") +
-      tile("Assigned", s.assigned, merchants().length + " merchants", "", "") +
-      tile("Inventory value", M(s.value), M(s.availValue) + " available") +
-      tile("Low stock", s.low, "below your minimum", s.low ? "warn" : "", "attn") +
-      tile("Out of stock", s.out, "nothing available", s.out ? "crit" : "", "zero") +
+      tile("Total units", s.units, s.products + " products", "c-blue") +
+      tile("Available", s.available, "on the shelf", "c-green", "instock") +
+      tile("Assigned", s.assigned, merchants().length + " merchants", "c-violet", "") +
+      tile("Inventory value", M(s.value), M(s.availValue) + " available", "c-teal") +
+      tile("Low stock", s.low, "below your minimum", s.low ? "warn" : "c-amber", "attn") +
+      tile("Out of stock", s.out, "nothing available", s.out ? "crit" : "c-red", "zero") +
     '</div>' +
     '<section class="panel" style="margin-top:16px"><div class="ph"><h2>Needs restocking</h2><span class="sub">' + s.alerts.length + ' of ' + s.watched + ' items with an alert set</span>' +
         (s.alerts.length ? '<button class="btn sm primary" type="button" data-act="restock-pdf" style="margin-left:12px">Restock PDF</button>' : "") + '</div><div class="alist">' + att + '</div></section>' +
