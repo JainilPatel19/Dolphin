@@ -72,6 +72,8 @@ button,input,select{font:inherit;color:inherit}
 .tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:16px}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);text-align:left;cursor:default}
 .tile.click{cursor:pointer}.tile.click:hover{border-color:var(--accent)}
+.tile.click .k::after{content:"View →";float:right;font-size:11.5px;font-weight:700;color:var(--accent);opacity:0;transition:opacity .15s}
+.tile.click:hover .k::after,.tile.click:focus-visible .k::after{opacity:1}
 .tile .k{font-size:12px;color:var(--muted);font-weight:500}
 .tile .v{font:800 26px/1.15 var(--display);margin-top:4px;font-variant-numeric:tabular-nums}
 .tile .s{font-size:12px;color:var(--muted);margin-top:2px}
@@ -83,7 +85,28 @@ button,input,select{font:inherit;color:inherit}
 .tile.c-violet{--tc:var(--violet)} .tile.c-violet .v{color:var(--violet)}
 .tile.c-teal{--tc:var(--teal)} .tile.c-teal .v{color:var(--teal)}
 .tile.c-amber{--tc:var(--amber)} .tile.c-red{--tc:var(--red)}
+.mtxt.good{color:var(--green)} .mtxt.warn{color:var(--amber)} .mtxt.bad{color:var(--red)}
 .tile.click:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(23,100,216,.12)}
+.tiles.home{grid-template-columns:2fr 2fr 1fr 1fr;align-items:stretch}
+.tile.wide .vrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tile.wide .vrow .s{margin:0}
+.split{display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--grey-soft);margin:12px 0 10px;gap:2px}
+.split i{display:block;height:100%}
+.kvs.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kv{display:grid;gap:1px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;color:inherit;text-decoration:none;font:inherit}
+.kv.click{cursor:pointer}.kv.click:hover{border-color:var(--accent);background:var(--accent-soft)}
+.kv span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.kv b{font:800 20px/1.1 var(--display)}
+.kv small{font-size:11.5px;color:var(--muted)}
+.sw{display:inline-block;width:9px;height:9px;border-radius:3px}
+.rows{display:grid;gap:5px;margin-top:10px}
+.r2{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;border-bottom:1px dashed var(--line);padding-bottom:4px}
+.r2 span{color:var(--muted)} .r2 b{font-size:14px}
+.pbar{height:6px;border-radius:4px;background:var(--grey-soft);overflow:hidden;margin-top:3px}
+.pbar i{display:block;height:100%;background:var(--teal);border-radius:4px}
+.hint2{font-size:11.5px;color:var(--muted);line-height:1.35}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);font-weight:700;cursor:pointer;font-size:11.5px}
+.linkbtn:hover{text-decoration:underline}
 .tile{transition:transform .12s,box-shadow .12s}
 .tile .meter{height:6px;border-radius:3px;background:var(--grey-soft);margin-top:8px;overflow:hidden;display:flex}
 .tile .meter i{display:block;height:100%}
@@ -180,8 +203,8 @@ input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent)}
 .syncdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:5px}
 .syncdot.ok{background:var(--green)}
 
-@media (max-width:1100px){.tiles{grid-template-columns:repeat(3,1fr)}.row2{grid-template-columns:1fr}}
-@media (max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}.aitem{grid-template-columns:1fr 90px}.aitem .need{grid-column:1/-1;text-align:left}.crow{grid-template-columns:110px 1fr 70px}.top .btn span{display:none}}
+@media (max-width:1100px){.tiles{grid-template-columns:repeat(3,1fr)}.row2{grid-template-columns:1fr}.tiles.home{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}.tiles.home{grid-template-columns:1fr 1fr}.tiles.home .tile.wide{grid-column:1/-1}.aitem{grid-template-columns:1fr 90px}.aitem .need{grid-column:1/-1;text-align:left}.crow{grid-template-columns:110px 1fr 70px}.top .btn span{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* v2 additions */
@@ -225,6 +248,28 @@ a.po{font-family:var(--mono);font-size:12.5px;font-weight:500}
 .minlabel{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
 .minlabel input,.mi{width:64px;padding:5px 7px;border:1px solid var(--line);border-radius:7px;background:var(--surface);text-align:right}
 .mi:placeholder-shown{border-style:dashed}
+.pi,.mg{width:104px;padding:5px 7px;border:1px solid var(--line);border-radius:7px;background:var(--surface);text-align:right}
+.mg{width:66px}
+.pi:placeholder-shown,.mg:placeholder-shown{border-style:dashed}
+.mgw{display:inline-flex;align-items:center;gap:3px}
+.minlabel input.pi{width:104px}.minlabel input.mg{width:66px}
+.mbox .fld input[type=number]{width:100%;text-align:left}
+.mbox .rmoney input[type=number],.mbox .rmoney select{width:100%!important;text-align:left}
+.lockedval{padding:8px 10px;border:1px dashed var(--line);border-radius:8px;font-weight:700;background:var(--grey-soft)}
+.setbtn{background:none;border:1px dashed var(--accent);color:var(--accent);border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700;cursor:pointer}
+.setbtn:hover{background:var(--accent-soft)}
+.lock{font-size:11.5px;color:var(--muted);font-weight:600;margin-left:4px}
+.sold{font-size:11.5px;color:var(--teal);font-weight:700;margin-top:2px;white-space:nowrap}
+.discbox{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px;background:color-mix(in srgb,var(--accent-soft) 40%,var(--surface))}
+.discrow{display:grid;grid-template-columns:1fr 90px 1fr;gap:10px;align-items:end}
+.sub2{font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap}
+.cond{display:inline-block;font-size:11px;font-weight:700;border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+.cond-new{background:var(--accent-soft);color:var(--accent)} .cond-used{background:var(--amber-soft);color:var(--amber)} .cond-refurb{background:color-mix(in srgb,var(--violet) 14%,transparent);color:var(--violet)}
+.rmoney{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.rmoney label,.rmoney .fl{display:grid!important;gap:4px;font-size:12.5px;color:var(--muted);border:0!important;padding:0!important}
+.rmoney input,.rmoney select{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--bg)}
+.mg.good{color:var(--green);font-weight:700}.mg.warn{color:var(--amber);font-weight:700}.mg.bad{color:var(--red);font-weight:700}
+.tools .btn.sm{margin-left:auto}
 .seg{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
 .seg button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px}
 .seg button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
@@ -278,7 +323,7 @@ a.po{font-family:var(--mono);font-size:12.5px;font-weight:500}
 .chk2{display:flex;gap:6px;align-items:center}
 .serials{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;margin-top:10px}
 .serials input{padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:var(--bg)}
-.d-po-created{background:var(--accent)} .d-po-edited{background:#7c5cd6} .d-po-received{background:var(--green)} .d-min{background:var(--muted)} .d-item-created{background:var(--accent)}
+.d-po-created{background:var(--accent)} .d-po-edited{background:#7c5cd6} .d-po-received{background:var(--green)} .d-min{background:var(--muted)} .d-item-created{background:var(--accent)} .d-price,.d-unit-money,.d-cost,.d-cond-price{background:var(--teal)}
 .asme{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
 .av{width:18px;height:18px;border-radius:50%;flex:none}
 .tlwrap{padding:14px 16px 4px}
@@ -374,15 +419,20 @@ var INV = (function () {
     return { key: "idle", label: "In stock", alert: false };
   }
 
+  // gross margin on the selling price: (price - cost) / price
+  function margin(cost, price) { if (price == null || price === "" || !(Number(price) > 0)) return null; return (Number(price) - Number(cost)) / Number(price) * 100; }
+  function pct(m) { return m == null ? "–" : (Math.round(m * 10) / 10).toFixed(1) + "%"; }
   function money(n) {
     return "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function summarize(items, mins) {
-    var s = { products: items.length, units: 0, available: 0, assigned: 0, value: 0, availValue: 0, low: 0, out: 0, watched: 0, alerts: [] };
+    var s = { products: items.length, units: 0, available: 0, assigned: 0, value: 0, availValue: 0, low: 0, out: 0, watched: 0, alerts: [], priced: 0, sellValue: 0, pricedCost: 0, margin: null };
     items.forEach(function (it) {
       s.units += it.total; s.available += it.available; s.assigned += it.assigned;
-      s.value += it.total * it.cost; s.availValue += it.available * it.cost;
+      s.value += it.value != null ? it.value : it.total * it.cost; s.availValue += it.availValue != null ? it.availValue : it.available * it.cost;
+      if (it.sellValue != null) { if (it.sellValue > 0) { s.priced++; s.sellValue += it.sellValue; s.pricedCost += it.pricedCost; } }
+      else if (it.price != null && Number(it.price) > 0) { s.priced++; s.sellValue += it.total * Number(it.price); s.pricedCost += it.total * it.cost; }
       var m = mins[it.name];
       var st = status(it, m);
       if (m != null) s.watched++;
@@ -391,6 +441,7 @@ var INV = (function () {
       if (st.alert) s.alerts.push({ item: it, min: Number(m), status: st, need: Math.max(0, Number(m) - it.available) });
     });
     s.alerts.sort(function (a, b) { return (a.status.key === "out" ? 0 : 1) - (b.status.key === "out" ? 0 : 1) || b.need - a.need; });
+    if (s.sellValue > 0) s.margin = (s.sellValue - s.pricedCost) / s.sellValue * 100;
     return s;
   }
 
@@ -400,7 +451,7 @@ var INV = (function () {
     return CAT_ORDER.filter(function (c) { return g[c]; }).map(function (c) {
       var list = g[c].slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
       var t = { name: c, items: list, units: 0, available: 0, assigned: 0, value: 0 };
-      list.forEach(function (it) { t.units += it.total; t.available += it.available; t.assigned += it.assigned; t.value += it.total * it.cost; });
+      list.forEach(function (it) { t.units += it.total; t.available += it.available; t.assigned += it.assigned; t.value += it.value != null ? it.value : it.total * it.cost; });
       return t;
     });
   }
@@ -437,7 +488,8 @@ var INV = (function () {
       ["Products", String(s.products), "device types on record"],
       ["Total units", String(s.units), s.available + " available, " + s.assigned + " assigned"],
       ["Inventory value", money(s.value), "at unit cost"],
-      ["Available value", money(s.availValue), "sitting on the shelf"],
+      s.priced ? ["Sell value / margin", money(s.sellValue), pct(s.margin) + " margin" + (s.priced < s.products ? " (" + s.priced + " of " + s.products + " items priced)" : ""), s.margin < 15 ? RED : s.margin < 25 ? AMBER : GREEN]
+               : ["Available value", money(s.availValue), "sitting on the shelf"],
       ["Low stock", String(s.low), "below your minimum", s.low ? AMBER : GREEN],
       ["Out of stock", String(s.out), "nothing available", s.out ? RED : GREEN]
     ];
@@ -515,19 +567,22 @@ var INV = (function () {
     y = sectionTitle("Full inventory", s.products + " products  |  " + s.units + " units", y);
     var body = [];
     groups.forEach(function (g) {
-      body.push([{ content: g.name + "   (" + g.items.length + " products, " + money(g.value) + ")", colSpan: 8, styles: { fillColor: [224, 236, 255], textColor: NAVY, fontStyle: "bold", fontSize: 8.5 } }]);
+      body.push([{ content: g.name + "   (" + g.items.length + " products, " + money(g.value) + ")", colSpan: 10, styles: { fillColor: [224, 236, 255], textColor: NAVY, fontStyle: "bold", fontSize: 8.5 } }]);
       g.items.forEach(function (it) {
         var m = mins[it.name], st = status(it, m);
-        body.push([it.name, it.total, it.available, it.assigned, m != null ? m : "-", st.label, money(it.cost), money(it.total * it.cost)]);
+        var mg = it.sellValue > 0 ? (it.sellValue - it.pricedCost) / it.sellValue * 100 : margin(it.cost, it.price);
+        var row = [it.name, it.total, it.available, it.assigned, m != null ? m : "-", st.label, money(it.avgCost != null ? it.avgCost : it.cost), it.price > 0 ? money(it.price) : "-", pct(mg), money(it.value != null ? it.value : it.total * it.cost)]; row._mg = mg; body.push(row);
       });
     });
     autoTable(doc, merge(base, {
       startY: y,
-      head: [["Item", "Total", "Available", "Assigned", "Min", "Status", "Unit cost", "Value"]],
+      head: [["Item", "Total", "Avail.", "Assigned", "Min", "Status", "Avg cost", "Avg sell", "Margin", "Value"]],
       body: body,
-      columnStyles: { 0: { cellWidth: 178 }, 1: { halign: "right" }, 2: { halign: "right" }, 3: { halign: "right" }, 4: { halign: "right" }, 6: { halign: "right" }, 7: { halign: "right" } },
+      styles: merge(base.styles, { fontSize: 7.8, cellPadding: { top: 4, bottom: 4, left: 4, right: 4 } }),
+      columnStyles: { 0: { cellWidth: 140 }, 1: { halign: "right" }, 2: { halign: "right" }, 3: { halign: "right" }, 4: { halign: "right" }, 5: { cellWidth: 56 }, 6: { halign: "right" }, 7: { halign: "right" }, 8: { halign: "right", fontStyle: "bold" }, 9: { halign: "right" } },
       didParseCell: function (d) {
-        if (d.section === "head" && [1, 2, 3, 4, 6, 7].indexOf(d.column.index) >= 0) d.cell.styles.halign = "right";
+        if (d.section === "head" && [1, 2, 3, 4, 6, 7, 8, 9].indexOf(d.column.index) >= 0) d.cell.styles.halign = "right";
+        if (d.section === "body" && d.column.index === 8 && d.row.raw._mg != null) d.cell.styles.textColor = d.row.raw._mg < 15 ? RED : d.row.raw._mg < 25 ? AMBER : GREEN;
         if (d.section === "body" && d.column.index === 5) {
           var v = d.cell.raw;
           d.cell.styles.textColor = v === "Out of stock" ? RED : v === "Low stock" ? AMBER : v === "Healthy" ? GREEN : MUTED;
@@ -704,7 +759,7 @@ var INV = (function () {
     return doc;
   }
 
-  return { category: category, status: status, money: money, summarize: summarize, byCategory: byCategory, buildReport: buildReport, buildRestock: buildRestock, CAT_ORDER: CAT_ORDER };
+  return { category: category, status: status, money: money, summarize: summarize, byCategory: byCategory, buildReport: buildReport, buildRestock: buildRestock, margin: margin, pct: pct, CAT_ORDER: CAT_ORDER };
 })();
 if (typeof module !== "undefined") module.exports = INV;
 
@@ -760,6 +815,7 @@ function loadLocal() {
   var st = local(LKEY);
   if (st && st.products) { S.products = st.products; S.pos = st.pos; S.settings = st.settings || S.settings; }
   else { var b = buildFromSeed(); S.products = b.products; S.pos = b.pos; }
+  migrate(S.products);
 }
 function saveLocal() { local(LKEY, { products: S.products, pos: S.pos, settings: S.settings }); }
 
@@ -780,7 +836,34 @@ loadLocal();
 /* ================= derived helpers ================= */
 function plist() { return Object.keys(S.products).map(function (k) { return S.products[k]; }); }
 function counts(p) { var a = 0, s = 0; p.units.forEach(function (u) { if (u.status === "assigned") s++; else a++; }); return { total: p.units.length, available: a, assigned: s }; }
-function asItems() { return plist().map(function (p) { var c = counts(p); return { name: p.name, total: c.total, available: c.available, assigned: c.assigned, cost: p.cost }; }); }
+var CONDS = [["new", "New"], ["used", "Used"], ["refurb", "Refurbished"]];
+function condLabel(c) { return { new: "New", used: "Used", refurb: "Refurbished" }[c] || "New"; }
+function guessCond(name) { return /refurb/i.test(name) ? "refurb" : /used/i.test(name) ? "used" : "new"; }
+function condOf(p, u) { return u.cond || guessCond(p.name); }
+function uCost(p, u) { return u.cost != null && u.cost !== "" ? Number(u.cost) : Number(p.cost) || 0; }
+// default sell price for a condition: its own price if set, otherwise the item's main sell price
+function defPrice(p, c) { var v = c && c !== "new" && p.priceBy && p.priceBy[c]; if (v > 0) return Number(v); return p.price > 0 ? Number(p.price) : null; }
+function uPrice(p, u) { return u.price > 0 ? Number(u.price) : defPrice(p, condOf(p, u)); }
+function money(p) {
+  var r = { value: 0, availValue: 0, sellValue: 0, pricedCost: 0, pricedUnits: 0, min: Infinity, max: -Infinity, conds: {} };
+  p.units.forEach(function (u) {
+    var c = uCost(p, u), pr = uPrice(p, u), cd = condOf(p, u);
+    r.value += c; if (u.status !== "assigned") r.availValue += c;
+    if (pr) { r.sellValue += pr; r.pricedCost += c; r.pricedUnits++; }
+    if (c < r.min) r.min = c; if (c > r.max) r.max = c; r.conds[cd] = (r.conds[cd] || 0) + 1;
+  });
+  if (!p.units.length) r.min = r.max = Number(p.cost) || 0;
+  r.avgCost = p.units.length ? r.value / p.units.length : Number(p.cost) || 0;
+  r.avgSell = r.pricedUnits ? r.sellValue / r.pricedUnits : null;
+  r.margin = r.sellValue > 0 ? (r.sellValue - r.pricedCost) / r.sellValue * 100 : null;
+  return r;
+}
+// A unit's price is fixed once it has one. Item-level prices only reach units that never had a price, and new stock.
+function stampPrices(p) { var n = 0; p.units.forEach(function (u) { if (!(u.price > 0)) { var d = defPrice(p, condOf(p, u)); if (d) { u.price = d; n++; } } }); return n; }
+function condText(r) { return CONDS.filter(function (c) { return r.conds[c[0]]; }).map(function (c) { return r.conds[c[0]] + " " + c[1].toLowerCase(); }).join(" · "); }
+function asItems() { return plist().map(function (p) { var c = counts(p), r = money(p); return { name: p.name, total: c.total, available: c.available, assigned: c.assigned, cost: Number(p.cost) || 0, avgCost: r.avgCost, price: r.avgSell, value: r.value, availValue: r.availValue, sellValue: r.sellValue, pricedCost: r.pricedCost }; }); }
+// every unit keeps its own cost and condition, so a later batch at a new price never changes older units
+function migrate(products) { Object.keys(products).forEach(function (k) { var p = products[k]; (p.units || []).forEach(function (u) { if ((u.cost == null || u.cost === "") && Number(p.cost) > 0) u.cost = Number(p.cost); if (!u.cond) u.cond = guessCond(p.name); }); }); }
 function mins() { var m = {}; plist().forEach(function (p) { if (p.min != null) m[p.name] = p.min; }); return m; }
 function allUnits() { var r = []; plist().forEach(function (p) { p.units.forEach(function (u) { r.push({ p: p, u: u }); }); }); return r; }
 function poUnits(num) { return allUnits().filter(function (x) { return x.u.po === num; }); }
@@ -852,6 +935,29 @@ function render() {
 
 /* ---------- Inventory ---------- */
 function tile(k, v, s, cls, f) { return '<div class="tile ' + (cls || "") + (f ? " click" : "") + '"' + (f ? ' data-act="filter" data-f="' + f + '" role="button" tabindex="0"' : "") + '><div class="k">' + k + '</div><div class="v num">' + v + '</div><div class="s">' + s + '</div></div>'; }
+function scrollToItems() { var el = $("q"); if (el) { var top = el.closest(".panel").getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: top, behavior: "smooth" }); } }
+function unitsCard(s) {
+  var a = s.available, g = s.assigned, t = Math.max(s.units, 1), mc = merchants().length;
+  return '<div class="tile wide c-blue click" data-act="filter" data-f="all" role="button" tabindex="0" title="Show all items"><div class="k">Units</div>' +
+    '<div class="vrow"><div class="v num">' + s.units + '</div><div class="s">' + s.products + ' products</div></div>' +
+    '<div class="split" role="img" aria-label="' + a + ' available, ' + g + ' assigned"><i style="width:' + (a / t * 100) + '%;background:var(--green)"></i><i style="width:' + (g / t * 100) + '%;background:var(--violet)"></i></div>' +
+    '<div class="kvs two">' +
+      '<button type="button" class="kv click" data-act="filter" data-f="instock"><span><i class="sw" style="background:var(--green)"></i>Available</span><b class="num">' + a + '</b><small>' + Math.round(a / t * 100) + '% · on the shelf</small></button>' +
+      '<a class="kv click" href="#merchants"><span><i class="sw" style="background:var(--violet)"></i>Assigned</span><b class="num">' + g + '</b><small>' + Math.round(g / t * 100) + '% · ' + mc + ' merchants</small></a>' +
+    '</div></div>';
+}
+function valueCard(s) {
+  var pr = s.priced, n = s.products, full = pr >= n;
+  return '<div class="tile wide c-teal click" data-act="filter" data-f="all" data-sort="value" role="button" tabindex="0" title="Show items by value"><div class="k">Inventory value <span class="mut">· at cost</span></div>' +
+    '<div class="vrow"><div class="v num">' + M(s.value) + '</div><div class="s">' + M(s.availValue) + ' on the shelf</div></div>' +
+    '<div class="rows">' +
+      '<div class="r2"><span>Sells for</span><b class="num">' + (pr ? M(s.sellValue) : "–") + '</b></div>' +
+      '<div class="r2"><span>Margin</span><b class="num mtxt ' + mClass(s.margin) + '">' + (s.margin != null ? INV.pct(s.margin) : "–") + '</b></div>' +
+      '<div class="r2"><span>Priced items</span><b class="num">' + pr + ' of ' + n + '</b></div>' +
+      '<div class="pbar"><i style="width:' + (n ? pr / n * 100 : 0) + '%"></i></div>' +
+      (full ? "" : '<div class="hint2">' + (pr ? 'Sells for and margin count only the ' + pr + ' priced item' + (pr > 1 ? "s" : "") + '. ' : 'No sell prices yet. ') + '<button type="button" class="linkbtn" data-act="set-margin">Set prices</button></div>') +
+    '</div></div>';
+}
 function vInventory(s) {
   var att = s.alerts.length ? s.alerts.map(function (a) {
     var out = a.status.key === "out", p = S.products[slugify(a.item.name)] || plist().filter(function (x) { return x.name === a.item.name; })[0];
@@ -860,33 +966,35 @@ function vInventory(s) {
       '<div class="need" style="color:var(--' + (out ? "red" : "amber") + ')">Order ' + a.need + '</div></a>';
   }).join("") : '<div class="empty">Nothing below minimum.</div>';
   return '' +
-    '<div class="tiles">' +
-      tile("Total units", s.units, s.products + " products", "c-blue") +
-      tile("Available", s.available, "on the shelf", "c-green", "instock") +
-      tile("Assigned", s.assigned, merchants().length + " merchants", "c-violet", "") +
-      tile("Inventory value", M(s.value), M(s.availValue) + " available", "c-teal") +
-      tile("Low stock", s.low, "below your minimum", s.low ? "warn" : "c-amber", "attn") +
+    '<div class="tiles home">' + unitsCard(s) + valueCard(s) +
+      tile("Low stock", s.low, "below your minimum", s.low ? "warn" : "c-amber", "low") +
       tile("Out of stock", s.out, "nothing available", s.out ? "crit" : "c-red", "zero") +
     '</div>' +
     '<section class="panel" style="margin-top:16px"><div class="ph"><h2>Needs restocking</h2><span class="sub">' + s.alerts.length + ' of ' + s.watched + ' items with an alert set</span>' +
         (s.alerts.length ? '<button class="btn sm primary" type="button" data-act="restock-pdf" style="margin-left:12px">Restock PDF</button>' : "") + '</div><div class="alist">' + att + '</div></section>' +
     '<section class="panel" style="margin-top:16px"><div class="ph"><h2>All items</h2><span class="sub">Click an item to see every unit, its PO and who has it.</span></div>' +
       '<div class="tools"><div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="q" type="search" placeholder="Search items" aria-label="Search items" value="' + esc(ui.q) + '"></div>' +
-      '<div class="chips" id="chips"></div><select class="sel" id="cat" aria-label="Category"><option value="">All categories</option>' + INV.CAT_ORDER.map(function (c) { return '<option' + (ui.cat === c ? " selected" : "") + '>' + c + '</option>'; }).join("") + '</select></div>' +
+      '<div class="chips" id="chips"></div><select class="sel" id="cat" aria-label="Category"><option value="">All categories</option>' + INV.CAT_ORDER.map(function (c) { return '<option' + (ui.cat === c ? " selected" : "") + '>' + c + '</option>'; }).join("") + '</select><button class="btn sm" type="button" data-act="set-margin">Set margin</button></div>' +
       '<div class="tblwrap"><table class="grid"><thead><tr>' +
-        th("name", "Item") + th("status", "Status") + th("available", "Available / Total", "r") + th("assigned", "Assigned", "r") + '<th>Alert below</th>' + th("cost", "Unit cost", "r") + th("value", "Value", "r") +
+        th("name", "Item") + th("status", "Status") + th("available", "Available / Total", "r") + th("assigned", "Assigned", "r") + '<th>Alert below</th>' + th("cost", "Buy cost", "r") + th("price", "Sell price", "r") + th("margin", "Margin", "r") + th("value", "Stock value", "r") +
       '</tr></thead><tbody id="tb"></tbody></table></div><div class="foot" id="count"></div></section>';
 }
 function check(n, label, k) { return '<div class="chk ' + (n ? "warn" : "ok") + '"' + (n ? ' data-act="check" data-k="' + k + '" role="button" tabindex="0"' : "") + '><b class="num">' + n + '</b><span>' + label + '</span>' + (n ? '<em>Show</em>' : "") + '</div>'; }
+function mClass(m) { return m == null ? "" : m < 15 ? "bad" : m < 25 ? "warn" : "good"; }
+function priceCells(p) {
+  var m = INV.margin(p.cost, p.price);
+  return '<td class="r" data-stop="1"><input type="number" min="0" step="0.01" class="pi num" data-slug="' + p.slug + '" value="' + (p.price > 0 ? p.price : "") + '" placeholder="–" aria-label="Sell price for ' + esc(p.name) + '"></td>' +
+    '<td class="r" data-stop="1"><span class="mgw"><input type="number" step="0.1" max="99" class="mg num ' + mClass(m) + '" data-slug="' + p.slug + '" value="' + (m == null ? "" : (Math.round(m * 10) / 10)) + '" placeholder="–" aria-label="Margin % for ' + esc(p.name) + '">%</span></td>';
+}
 function th(k, label, cls) { var on = ui.sort.k === k; return '<th class="sort ' + (cls || "") + '" data-act="sort" data-k="' + k + '">' + label + '<span class="ar">' + (on ? (ui.sort.d > 0 ? "▲" : "▼") : "") + '</span></th>'; }
 var ORDER = { out: 0, low: 1, ok: 2, none: 3, idle: 4 };
 function prodRows() {
-  return plist().map(function (p) { var c = counts(p); var it = { name: p.name, total: c.total, available: c.available, assigned: c.assigned, cost: p.cost }; return { p: p, it: it, st: INV.status(it, p.min), cat: INV.category(p.name), value: c.total * p.cost }; });
+  return plist().map(function (p) { var c = counts(p), r = money(p); var it = { name: p.name, total: c.total, available: c.available, assigned: c.assigned, cost: p.cost }; return { p: p, it: it, r: r, st: INV.status(it, p.min), cat: INV.category(p.name), value: r.value }; });
 }
 function renderProdTable() {
   var all = prodRows().filter(function (x) { return !(S.settings.hideSvc && x.cat === "Services & Fees"); });
-  var defs = [["all", "All"], ["attn", "Needs restocking"], ["watched", "Alert set"], ["zero", "Out of stock"], ["instock", "In stock"]];
-  var fn = { all: function () { return true; }, attn: function (x) { return x.st.alert; }, watched: function (x) { return x.p.min != null; }, zero: function (x) { return x.it.available === 0; }, instock: function (x) { return x.it.available > 0; } };
+  var defs = [["all", "All"], ["attn", "Needs restocking"], ["low", "Low stock"], ["zero", "Out of stock"], ["watched", "Alert set"], ["instock", "In stock"]];
+  var fn = { all: function () { return true; }, attn: function (x) { return x.st.alert; }, low: function (x) { return x.st.key === "low"; }, watched: function (x) { return x.p.min != null; }, zero: function (x) { return x.it.available === 0; }, instock: function (x) { return x.it.available > 0; } };
   $("chips").innerHTML = defs.map(function (d) { return '<button class="chip" type="button" data-act="filter" data-f="' + d[0] + '" aria-pressed="' + (ui.filter === d[0]) + '">' + d[1] + '<span class="c">' + all.filter(fn[d[0]]).length + '</span></button>'; }).join("");
   var q = ui.q.trim().toLowerCase();
   var r = all.filter(fn[ui.filter]).filter(function (x) { return (!ui.cat || x.cat === ui.cat) && (!q || (x.p.name + " " + x.cat).toLowerCase().indexOf(q) >= 0 || x.p.units.some(function (u) { return u.serial.toLowerCase().indexOf(q) >= 0; })); });
@@ -894,7 +1002,8 @@ function renderProdTable() {
   r.sort(function (a, b) {
     if (k === "name") return a.p.name.toLowerCase() < b.p.name.toLowerCase() ? -d : d;
     if (k === "status") { var x = ORDER[a.st.key] - ORDER[b.st.key]; return x ? x * d : a.it.available - b.it.available; }
-    var va = k === "value" ? a.value : k === "cost" ? a.p.cost : a.it[k], vb = k === "value" ? b.value : k === "cost" ? b.p.cost : b.it[k];
+    function sv(x) { if (k === "value") return x.value; if (k === "cost") return x.p.cost; if (k === "price") return x.p.price > 0 ? x.p.price : -1; if (k === "margin") { var m = INV.margin(x.p.cost, x.p.price); return m == null ? -1e9 : m; } return x.it[k]; }
+    var va = sv(a), vb = sv(b);
     return (va - vb) * d;
   });
   $("tb").innerHTML = r.length ? r.map(function (x) {
@@ -904,21 +1013,37 @@ function renderProdTable() {
       '<td class="r"><div class="stock num"><div class="bar"><i style="width:' + pct + '%;background:var(--' + col + ')"></i></div><b>' + x.it.available + '</b><span class="mut">/ ' + x.it.total + '</span></div></td>' +
       '<td class="r num">' + x.it.assigned + '</td>' +
       '<td data-stop="1"><input type="number" min="1" class="mi num" data-slug="' + x.p.slug + '" value="' + (x.p.min != null ? x.p.min : "") + '" placeholder="–" aria-label="Minimum for ' + esc(x.p.name) + '"></td>' +
-      '<td class="r num">' + M(x.p.cost) + '</td><td class="r num">' + M(x.value) + '</td></tr>';
-  }).join("") : '<tr><td colspan="7" class="empty">No items match.</td></tr>';
+      '<td class="r num">' + M(x.p.cost) + (x.r.max - x.r.min > 0.005 ? '<div class="sub2">units ' + M(x.r.min) + '–' + M(x.r.max) + '</div>' : "") + '</td>' + priceCells(x.p) +
+      '<td class="r num">' + M(x.value) + (x.r.margin != null ? '<div class="sub2 mtxt ' + mClass(x.r.margin) + '">' + INV.pct(x.r.margin) + ' on stock</div>' : "") + '</td></tr>';
+  }).join("") : '<tr><td colspan="9" class="empty">No items match.</td></tr>';
   $("count").textContent = "Showing " + r.length + " of " + all.length + " items";
 }
 
 /* ---------- Item (product) ---------- */
+function condPrices(p, r) {
+  var others = CONDS.filter(function (c) { return c[0] !== "new" && r.conds[c[0]] && (Object.keys(r.conds).length > 1); });
+  if (!others.length) return "";
+  return '<section class="panel" style="margin-top:16px"><div class="ph"><h2>Price by condition</h2><span class="sub">Units use these unless you set a price on the unit itself</span></div><div class="tools">' +
+    '<span class="minlabel">New <b>' + (p.price > 0 ? M(p.price) : "–") + '</b> <span class="mut">(main sell price above)</span></span>' +
+    others.map(function (c) { var v = p.priceBy && p.priceBy[c[0]]; var cost = avgCostFor(p, c[0]); var m = INV.margin(cost, v || defPrice(p, c[0]));
+      return '<label class="minlabel">' + c[1] + ' <input type="number" min="0" step="0.01" class="pi num cpi" data-slug="' + p.slug + '" data-cond="' + c[0] + '" value="' + (v > 0 ? v : "") + '" placeholder="' + (p.price > 0 ? p.price : "–") + '"> <span class="mtxt ' + mClass(m) + '">' + (m != null ? INV.pct(m) : "") + '</span></label>'; }).join("") +
+    '</div></section>';
+}
+function avgCostFor(p, cond) { var t = 0, n = 0; p.units.forEach(function (u) { if (condOf(p, u) === cond) { t += uCost(p, u); n++; } }); return n ? t / n : Number(p.cost) || 0; }
 function vItem(p) {
   if (!p) return notFound("That item");
+  var r = money(p);
   var c = counts(p), st = INV.status({ available: c.available }, p.min);
   var f = ui.unitFilter;
   var units = p.units.filter(function (u) { return f === "all" || u.status === f; });
   return crumbs([["#inventory", "Inventory"]], p.name) +
-    '<div class="head"><div><h1>' + esc(p.name) + '</h1><div class="mut">' + esc(INV.category(p.name)) + ' · ' + M(p.cost) + ' per unit</div></div>' +
-    '<div class="headact"><label class="minlabel" for="itemMin">Alert below <input id="itemMin" type="number" min="1" class="num" data-slug="' + p.slug + '" value="' + (p.min != null ? p.min : "") + '" placeholder="–"></label><span class="pill p-' + st.key + '">' + st.label + '</span></div></div>' +
-    '<div class="tiles t3">' + tile("Total units", c.total, "from " + new Set(p.units.map(function (u) { return u.po; }).filter(Boolean)).size + " purchase orders") + tile("Available", c.available, "ready to assign") + tile("Assigned", c.assigned, "with merchants") + '</div>' +
+    '<div class="head"><div><h1>' + esc(p.name) + '</h1><div class="mut">' + esc(INV.category(p.name)) + ' · buy cost ' + M(p.cost) + ' (latest)</div></div>' +
+    '<div class="headact"><label class="minlabel" title="Price for new stock. Units already priced keep their price.">Sell price (new stock) <input id="itemPrice" type="number" min="0" step="0.01" class="pi num" data-slug="' + p.slug + '" value="' + (p.price > 0 ? p.price : "") + '" placeholder="–"></label>' +
+      '<label class="minlabel">Margin <span class="mgw"><input id="itemMargin" type="number" step="0.1" max="99" class="mg num ' + mClass(INV.margin(p.cost, p.price)) + '" data-slug="' + p.slug + '" value="' + (INV.margin(p.cost, p.price) == null ? "" : Math.round(INV.margin(p.cost, p.price) * 10) / 10) + '" placeholder="–">%</span></label>' +
+      '<label class="minlabel" for="itemMin">Alert below <input id="itemMin" type="number" min="1" class="num" data-slug="' + p.slug + '" value="' + (p.min != null ? p.min : "") + '" placeholder="–"></label><span class="pill p-' + st.key + '">' + st.label + '</span></div></div>' +
+    '<div class="tiles t4">' + tile("Total units", c.total, condText(r) || ("from " + new Set(p.units.map(function (u) { return u.po; }).filter(Boolean)).size + " purchase orders"), "c-blue") + tile("Available", c.available, "ready to assign", "c-green") + tile("Assigned", c.assigned, "with merchants", "c-violet") +
+      tile("Stock value", M(r.value), (r.max - r.min > 0.005 ? "unit cost " + M(r.min) + "–" + M(r.max) : "at " + M(r.avgCost) + " each") + (r.margin != null ? ' · <b class="mtxt ' + mClass(r.margin) + '">' + INV.pct(r.margin) + ' margin</b>' : ""), "c-teal") + '</div>' +
+    condPrices(p, r) +
     '<section class="panel" style="margin-top:16px"><div class="ph"><h2>Units</h2><div class="seg" role="group" aria-label="Filter units">' +
       [["all", "All " + c.total], ["available", "Available " + c.available], ["assigned", "Assigned " + c.assigned]].map(function (x) { return '<button type="button" data-act="ufilter" data-f="' + x[0] + '" aria-pressed="' + (f === x[0]) + '">' + x[1] + '</button>'; }).join("") +
     '</div></div>' + unitTable(units.map(function (u) { return { p: p, u: u }; }), { product: false }) + '</section>' +
@@ -934,16 +1059,21 @@ function unitTable(rows, o) {
   o = o || {};
   if (!rows.length) return '<div class="empty">No units here.</div>';
   var idx = serialIndex();
-  return '<div class="tblwrap"><table class="grid"><thead><tr><th>Serial number</th>' + (o.product !== false ? '<th>Item</th>' : "") + '<th>From PO</th><th>Status</th><th>Assigned to</th><th>Since</th><th>Assigned by</th><th class="r">Actions</th></tr></thead><tbody>' +
+  return '<div class="tblwrap"><table class="grid"><thead><tr><th>Serial number</th>' + (o.product !== false ? '<th>Item</th>' : "") + '<th>From PO</th><th>Status</th><th>Assigned to</th><th>Since</th><th>Assigned by</th><th class="r">Cost</th><th class="r">Sell</th><th class="r">Margin</th><th class="r">Actions</th></tr></thead><tbody>' +
     rows.map(function (x) {
       var u = x.u, last = lastAssign(u), dup = idx[u.serial.trim().toLowerCase()].length > 1;
-      return '<tr class="rowlink" data-act="open-unit" data-id="' + u.id + '"><td><span class="mono">' + esc(u.serial) + '</span>' + (dup ? ' <span class="flag" title="Another unit has this serial">duplicate</span>' : "") + (/dummy/i.test(u.serial) ? ' <span class="flag">placeholder</span>' : "") + '</td>' +
+      var cd = condOf(x.p, u), uc = uCost(x.p, u), up = uPrice(x.p, u), um = INV.margin(uc, up);
+      return '<tr class="rowlink" data-act="open-unit" data-id="' + u.id + '"><td><span class="mono">' + esc(u.serial) + '</span><span class="cond cond-' + cd + '">' + condLabel(cd) + '</span>' + (dup ? ' <span class="flag" title="Another unit has this serial">duplicate</span>' : "") + (/dummy/i.test(u.serial) ? ' <span class="flag">placeholder</span>' : "") + '</td>' +
         (o.product !== false ? '<td><a href="#item-' + x.p.slug + '" data-stop="1">' + esc(x.p.name) + '</a></td>' : "") +
         '<td>' + (u.po ? '<a class="po" href="#po-' + esc(u.po) + '" data-stop="1">' + esc(u.po) + '</a>' : '<span class="flag">no PO</span>') + '</td>' +
         '<td><span class="pill ' + (u.status === "assigned" ? "p-asg" : "p-ok") + '">' + (u.status === "assigned" ? "Assigned" : "Available") + '</span></td>' +
         '<td>' + (u.status === "assigned" ? '<a href="#at-' + slugify(u.to) + '" data-stop="1">' + esc(u.to) + '</a>' : '<span class="mut">In stock</span>') + '</td>' +
         '<td class="mut">' + (u.status === "assigned" ? fmtDate(u.since) : "") + '</td>' +
         '<td class="mut">' + (u.status === "assigned" && last ? esc(who(last)) : "") + '</td>' +
+        (function () { var sm = u.status === "assigned" && u.soldFor != null ? INV.margin(uc, u.soldFor) : null;
+          var setB = '<button type="button" class="setbtn" data-act="edit-unit-money" data-id="' + u.id + '">Set</button>';
+          return '<td class="r num" data-stop="1">' + (costLocked(x.p, u) ? M(uc) : setB) + '</td><td class="r num" data-stop="1">' + (u.price > 0 ? M(u.price) : up ? M(up) + '<div class="sub2">default · <button type="button" class="linkbtn" data-act="edit-unit-money" data-id="' + u.id + '">set</button></div>' : setB) + (u.status === "assigned" && u.soldFor != null && u.discount > 0 ? '<div class="sold">sold ' + M(u.soldFor) + '</div>' : "") + '</td>' +
+            '<td class="r num"><span class="mtxt ' + mClass(sm != null ? sm : um) + '">' + (sm != null ? INV.pct(sm) : um != null ? INV.pct(um) : "–") + '</span></td>'; })() +
         '<td class="r" data-stop="1"><div class="acts">' + (u.status === "assigned"
           ? '<button class="btn sm" type="button" data-act="reassign" data-id="' + u.id + '">Reassign</button><button class="btn sm" type="button" data-act="release" data-id="' + u.id + '">Release</button>'
           : '<button class="btn sm primary" type="button" data-act="assign" data-id="' + u.id + '">Assign</button>') +
@@ -1018,10 +1148,11 @@ function vMerchant(slug) {
 /* ---------- Activity ---------- */
 function poCreated(po) { return (po.history || []).filter(function (h) { return h.t === "po-created"; })[0]; }
 var EV = { received: "Received", assigned: "Assigned", reassigned: "Reassigned", released: "Released", serial: "Serial changed" };
+function saleText(h) { return h.soldFor != null ? " · sold for " + M(h.soldFor) + (h.discount > 0 ? " (" + M(h.discount) + " off " + M(h.price) + ")" : "") : ""; }
 function evText(h) {
   if (h.t === "received") return "Received" + (h.po ? " on PO " + h.po : "") + (h.qty ? "" : "");
-  if (h.t === "assigned") return "Assigned to " + (h.to || "");
-  if (h.t === "reassigned") return "Moved from " + (h.from || "") + " to " + (h.to || "");
+  if (h.t === "assigned") return "Assigned to " + (h.to || "") + saleText(h);
+  if (h.t === "reassigned") return "Moved from " + (h.from || "") + " to " + (h.to || "") + saleText(h);
   if (h.t === "released") return "Released from " + (h.from || "") + (h.reason ? " · " + h.reason : "");
   if (h.t === "serial") return "Serial changed from " + h.from + " to " + h.to;
   if (h.t === "po-created") return "Created PO";
@@ -1029,6 +1160,10 @@ function evText(h) {
   if (h.t === "po-received") return "Received " + h.qty + " unit" + (h.qty === 1 ? "" : "s") + (h.receivedBy ? " (received by " + h.receivedBy + ")" : "");
   if (h.t === "min") return h.to ? "Low-stock alert set to below " + h.to + (h.from ? " (was " + h.from + ")" : "") : "Stopped low-stock alert" + (h.from ? " (was " + h.from + ")" : "");
   if (h.t === "item-created") return "Item created";
+  if (h.t === "unit-money") return "Price / condition changed";
+  if (h.t === "cost") return "Buy cost updated to " + M(h.to) + (h.from != null ? " (was " + M(h.from) + ")" : "");
+  if (h.t === "cond-price") return condLabel(h.cond) + " price " + (h.to ? "set to " + M(h.to) : "cleared");
+  if (h.t === "price") return h.to ? "Sell price set to " + M(h.to) + (h.from ? " (was " + M(h.from) + ")" : "") : "Sell price cleared" + (h.from ? " (was " + M(h.from) + ")" : "");
   return h.t;
 }
 function vActivity() {
@@ -1068,7 +1203,13 @@ function renderUnit() {
     '<span class="pill ' + (u.status === "assigned" ? "p-asg" : "p-ok") + '">' + (u.status === "assigned" ? "Assigned to " + esc(u.to) : "Available in stock") + '</span></div>' +
     '<dl class="facts"><div><dt>Purchase order</dt><dd>' + (u.po ? '<a class="po" href="#po-' + esc(u.po) + '" data-act="close-unit">' + esc(u.po) + '</a>' + (po && po.vendor ? ' · ' + esc(po.vendor) : "") : '<span class="flag">no PO</span>') + '</dd></div>' +
     '<div><dt>Item</dt><dd><a href="#item-' + p.slug + '" data-act="close-unit">' + esc(p.name) + '</a></dd></div>' +
-    '<div><dt>Unit cost</dt><dd class="num">' + M(p.cost) + '</dd></div>' +
+    (function () { var cd = condOf(p, u), uc = uCost(p, u), up = uPrice(p, u), um = INV.margin(uc, up);
+      return '<div><dt>Condition</dt><dd><span class="cond cond-' + cd + '" style="margin:0">' + condLabel(cd) + '</span></dd></div>' +
+        '<div><dt>Cost</dt><dd class="num">' + (costLocked(p, u) ? M(uc) + ' <span class="lock">🔒 locked</span>' : '<span class="mut">not set yet</span>') + '</dd></div>' +
+        '<div><dt>Sell price</dt><dd class="num">' + (u.price > 0 ? M(u.price) + ' <span class="lock" title="Set when received. It does not change.">🔒 locked</span>' : '<span class="mut">not set yet</span>') + '</dd></div>' +
+        '<div><dt>Margin</dt><dd><span class="mtxt ' + mClass(um) + '">' + (um != null ? INV.pct(um) : "–") + '</span></dd></div>' +
+        (u.status === "assigned" && u.soldFor != null ? '<div><dt>Sold for</dt><dd class="num"><b>' + M(u.soldFor) + '</b>' + (u.discount > 0 ? ' <span class="mut">(' + M(u.discount) + ' discount)</span>' : "") + ' · <span class="mtxt ' + mClass(INV.margin(uc, u.soldFor)) + '">' + INV.pct(INV.margin(uc, u.soldFor)) + ' margin</span></dd></div>' : "") +
+        '<div><dt></dt><dd><button class="btn sm" type="button" data-act="edit-unit-money" data-id="' + u.id + '">' + (u.price > 0 && costLocked(p, u) ? "Change condition" : "Fill in price / cost") + '</button></dd></div>'; })() +
     (u.status === "assigned" ? '<div><dt>With</dt><dd><a href="#at-' + slugify(u.to) + '" data-act="close-unit">' + esc(u.to) + '</a> since ' + fmtDate(u.since) + '</dd></div>' : "") + '</dl>' +
     '<div class="uacts">' + (u.status === "assigned"
       ? '<button class="btn primary" type="button" data-act="reassign" data-id="' + u.id + '">Reassign</button><button class="btn" type="button" data-act="release" data-id="' + u.id + '">Release to stock</button>'
@@ -1101,15 +1242,32 @@ function assignForm(id, mode) {
   modal(mode === "reassign" ? "Reassign " + u.serial : "Assign " + u.serial,
     (mode === "reassign" ? '<p class="mut">Currently with <b>' + esc(u.to) + '</b>. Both stay in the history.</p>' : '<p class="mut">' + esc(x.p.name) + ' from PO ' + esc(u.po || "–") + '</p>') +
     field("fTo", mode === "reassign" ? "Move to" : "Assign to", '<input id="fTo" list="mlist" required autocomplete="off" placeholder="Merchant or person"><datalist id="mlist">' + opts + '</datalist>') +
+    (function () { var list = uPrice(x.p, u), uc = uCost(x.p, u);
+      if (!list) return '<p class="mut">No sell price on this unit, so no discount to apply.</p>';
+      return '<div class="discbox"><div class="discrow">' + field("fDisc", "Discount", '<input id="fDisc" type="number" min="0" step="0.01" value="0">') +
+        field("fDiscT", "&nbsp;", '<select id="fDiscT" class="sel"><option value="$">$</option><option value="%">%</option></select>') +
+        '<div class="fld"><label>Sells for</label><div id="fSold" style="font-weight:800;font-size:16px;padding:6px 0"></div></div></div>' +
+        '<div class="hint">Price ' + M(list) + ' · cost ' + M(uc) + '. The unit\'s own price does not change.</div></div>'; })() +
     '<div class="two">' + nameField() + field("fAt", "Date", '<input id="fAt" type="date" required value="' + today() + '">') + '</div>' +
     field("fNote", "Note", '<input id="fNote" placeholder="Optional, e.g. ticket number">'),
     mode === "reassign" ? "Reassign" : "Assign", function () {
       var to = $("fTo").value.trim(); if (!to) return false; if (mode === "reassign" && to === u.to) { toast("That's who has it now."); return false; }
+      var sale = saleCalc(); if (sale && sale.bad) { toast(sale.bad); return false; }
       rememberMe(); var at = $("fAt").value, note = $("fNote").value.trim();
-      u.history.push(ev(mode === "reassign" ? { t: "reassigned", from: u.to, to: to, at: at, note: note } : { t: "assigned", to: to, at: at, note: note }));
-      u.status = "assigned"; u.to = to; u.since = at;
-      saveProduct(x.p.slug); render(); toast(u.serial + (mode === "reassign" ? " moved to " : " assigned to ") + to);
+      var evt = mode === "reassign" ? { t: "reassigned", from: u.to, to: to, at: at, note: note } : { t: "assigned", to: to, at: at, note: note };
+      if (sale) { evt.price = sale.list; evt.discount = sale.disc; evt.soldFor = sale.sold; }
+      u.history.push(ev(evt));
+      u.status = "assigned"; u.to = to; u.since = at; u.soldFor = sale ? sale.sold : null; u.discount = sale ? sale.disc : 0;
+      saveProduct(x.p.slug); render(); toast(u.serial + (mode === "reassign" ? " moved to " : " assigned to ") + to + (sale && sale.disc > 0 ? " · sold for " + M(sale.sold) : ""));
     });
+  function saleCalc() {
+    var list = uPrice(x.p, u); if (!list || !$("fDisc")) return null;
+    var v = Number($("fDisc").value) || 0, d = $("fDiscT").value === "%" ? Math.round(list * v) / 100 : v;
+    if (v < 0 || d > list) return { bad: "Discount can't be more than the price." };
+    return { list: list, disc: Math.round(d * 100) / 100, sold: Math.round((list - d) * 100) / 100 };
+  }
+  function showSold() { var sc = saleCalc(); if (!sc) return; var m = INV.margin(uCost(x.p, u), sc.sold); $("fSold").innerHTML = sc.bad ? '<span class="mtxt bad">too much</span>' : M(sc.sold) + ' <span class="mtxt ' + mClass(m) + '" style="font-size:13px">' + INV.pct(m) + ' margin</span>'; }
+  if ($("fDisc")) { ["fDisc", "fDiscT"].forEach(function (k) { $(k).addEventListener("input", showSold); $(k).addEventListener("change", showSold); }); showSold(); }
 }
 function releaseForm(id) {
   var x = findUnit(id); if (!x) return; var u = x.u;
@@ -1119,7 +1277,7 @@ function releaseForm(id) {
     field("fNote", "Note", '<input id="fNote" placeholder="Optional">'), "Release", function () {
       rememberMe();
       u.history.push(ev({ t: "released", from: u.to, at: $("fAt").value, reason: $("fReason").value, note: $("fNote").value.trim() }));
-      u.status = "available"; u.to = ""; u.since = "";
+      u.status = "available"; u.to = ""; u.since = ""; u.soldFor = null; u.discount = 0;
       saveProduct(x.p.slug); render(); toast(u.serial + " is back in stock");
     });
 }
@@ -1129,7 +1287,7 @@ function releaseAll(slug) {
     field("fReason", "Reason", '<select id="fReason" class="sel"><option>Merchant closed account</option><option>Returned to stock</option><option>Swapped for another unit</option></select>') +
     '<div class="two">' + nameField() + field("fAt", "Date", '<input id="fAt" type="date" required value="' + today() + '">') + '</div>', "Release " + m.units.length + " units", function () {
       rememberMe(); var at = $("fAt").value, reason = $("fReason").value, touched = {};
-      m.units.forEach(function (x) { x.u.history.push(ev({ t: "released", from: x.u.to, at: at, reason: reason })); x.u.status = "available"; x.u.to = ""; x.u.since = ""; touched[x.p.slug] = 1; });
+      m.units.forEach(function (x) { x.u.history.push(ev({ t: "released", from: x.u.to, at: at, reason: reason })); x.u.status = "available"; x.u.to = ""; x.u.since = ""; x.u.soldFor = null; x.u.discount = 0; touched[x.p.slug] = 1; });
       Object.keys(touched).forEach(saveProduct); go("merchants"); toast(m.units.length + " units released");
     });
 }
@@ -1144,6 +1302,62 @@ function serialForm(id) {
 }
 var dupArmed = "";
 function confirmDup(v) { if (dupArmed === v) { dupArmed = ""; return true; } dupArmed = v; toast(v + " is already used by another unit. Save again to keep it anyway."); return false; }
+
+/* ---- One unit: condition always. Cost and sell price come from the PO; each one can be filled in only while it is empty, then it locks. ---- */
+function costLocked(p, u) { return u.cost != null && u.cost !== "" && Number(u.cost) > 0; }
+function priceLocked(u) { return u.price > 0; }
+function unitMoneyForm(id) {
+  var x = findUnit(id); if (!x) return; var p = x.p, u = x.u, cd = condOf(p, u), cL = costLocked(p, u), pL = priceLocked(u);
+  var msg = cL && pL ? 'Cost ' + M(uCost(p, u)) + ' and sell price ' + M(u.price) + ' came from the PO and stay the same. Give a discount when you assign it.'
+    : (cL ? 'Cost ' + M(uCost(p, u)) + ' is locked. ' : 'No cost on this unit yet. ') + (pL ? 'Sell price ' + M(u.price) + ' is locked. ' : 'No sell price yet. ') + 'Whatever you fill in now locks once saved.';
+  modal((cL && pL ? "Condition · " : "Complete price · ") + u.serial, '<p class="mut">' + esc(p.name) + '. ' + msg + '</p>' +
+    '<div class="two">' + field("fCond", "Condition", '<select id="fCond" class="sel">' + CONDS.map(function (c) { return '<option value="' + c[0] + '"' + (c[0] === cd ? " selected" : "") + '>' + c[1] + '</option>'; }).join("") + '</select>') +
+    (cL ? '<div class="fld"><label>Cost</label><div class="lockedval">' + M(uCost(p, u)) + ' 🔒</div></div>' : field("fUCost", "Cost (what we paid)", '<input id="fUCost" type="number" min="0" step="0.01" value="" placeholder="' + (Number(p.cost) > 0 ? p.cost + " (item buy cost)" : "e.g. 215") + '">')) + '</div>' +
+    (pL ? '<div class="two"><div class="fld"><label>Sell price</label><div class="lockedval">' + M(u.price) + ' 🔒</div></div><div></div></div>'
+        : '<div class="two">' + field("fUPrice", "Sell price", '<input id="fUPrice" type="number" min="0" step="0.01" value="" placeholder="' + (defPrice(p, cd) || "") + '">') + field("fUMg", "Margin %", '<input id="fUMg" type="number" step="0.1" max="99" placeholder="–">') + '</div>') +
+    nameField(), "Save", function () {
+      var nc = $("fCond").value, ch = [], ncost = null, np = null;
+      if (nc !== cd) ch.push("condition " + condLabel(cd) + " → " + condLabel(nc));
+      if (!cL) { var rc = $("fUCost").value.trim(); if (rc !== "") { ncost = Number(rc); if (!(ncost > 0)) { toast("Cost must be more than 0."); return false; } ch.push("cost set to " + M(ncost) + " (locked)"); } }
+      if (!pL) { var rp = $("fUPrice").value.trim(); if (rp !== "") { np = Number(rp); if (!(np > 0)) { toast("Sell price must be more than 0."); return false; } ch.push("sell price set to " + M(np) + " (locked)"); } }
+      if (!ch.length) return;
+      rememberMe(); u.cond = nc; if (ncost != null) u.cost = ncost; if (np != null) u.price = np;
+      u.history.push(ev({ t: "unit-money", at: today(), note: ch.join("; ") }));
+      saveProduct(p.slug); render(); toast(u.serial + " updated");
+    });
+  if (pL) return;
+  function costNow() { var c = $("fUCost"); return c ? (Number(c.value) || Number(p.cost) || 0) : uCost(p, u); }
+  function sync(from) {
+    var cost = costNow(), pr = $("fUPrice"), mg = $("fUMg");
+    if (from === "mg") { var m = Number(mg.value); if (mg.value !== "" && m < 100 && cost > 0) pr.value = (Math.round(cost / (1 - m / 100) * 100) / 100); }
+    else { var v = pr.value !== "" ? Number(pr.value) : null; var mm = INV.margin(cost, v); mg.value = mm == null ? "" : Math.round(mm * 10) / 10; }
+  }
+  $("fUMg").addEventListener("input", function () { sync("mg"); });
+  ["fUPrice", "fUCost", "fCond"].forEach(function (k) { if (!$(k)) return; $(k).addEventListener("input", function () { sync(); }); $(k).addEventListener("change", function () { sync(); }); });
+  sync();
+}
+
+/* ---- Set margin for many items ---- */
+function marginForm() {
+  var cats = INV.CAT_ORDER.filter(function (c) { return plist().some(function (p) { return INV.category(p.name) === c; }); });
+  modal("Set margin", '<p class="mut">Works out the sell price from each item\'s buy cost. Example: cost $100 at 30% margin sells for $142.86. Units that already have a price keep it; this sets the price for new stock and for units that were never priced.</p>' +
+    '<div class="two">' + field("fMg", "Margin %", '<input id="fMg" type="number" step="0.1" min="0" max="99" required value="30">') +
+    field("fScope", "Apply to", '<select id="fScope" class="sel"><option value="all">All items</option>' + cats.map(function (c) { return '<option value="cat:' + esc(c) + '">' + esc(c) + '</option>'; }).join("") + '</select>') + '</div>' +
+    '<label class="chk2" style="border:0;justify-content:flex-start"><input type="checkbox" id="fOnlyNew" checked> Only items that don\'t have a sell price yet</label>' +
+    '<div class="hint" id="fMgPrev"></div>', "Apply", function () {
+      var mv = Number($("fMg").value); if (!($("fMg").value !== "" && mv >= 0 && mv < 100)) { toast("Enter a margin between 0 and 99%."); return false; }
+      var list = scopeList(); if (!list.length) { toast("No items match."); return false; }
+      rememberMe();
+      list.forEach(function (p) { var np = Math.round(p.cost / (1 - mv / 100) * 100) / 100, old = p.price != null ? p.price : null; if (np !== old) { p.price = np; var st3 = stampPrices(p); p.history = p.history || []; p.history.push(ev({ t: "price", from: old, to: np, at: today(), note: st3 ? st3 + " unpriced unit(s) got this price" : "" })); saveProduct(p.slug); } });
+      render(); toast(list.length + " item" + (list.length > 1 ? "s" : "") + " priced at " + mv + "% margin");
+    });
+  function scopeList() {
+    var sc = $("fScope").value, only = $("fOnlyNew").checked;
+    return plist().filter(function (p) { return p.cost > 0 && (sc === "all" || INV.category(p.name) === sc.slice(4)) && (!only || !(p.price > 0)); });
+  }
+  function prev() { var n = scopeList().length; $("fMgPrev").textContent = n + " item" + (n === 1 ? "" : "s") + " will get a new sell price."; }
+  ["fMg", "fScope", "fOnlyNew"].forEach(function (id) { $(id).addEventListener("input", prev); $(id).addEventListener("change", prev); }); prev();
+}
 
 /* ---- PO create / edit ---- */
 function poForm(num) {
@@ -1200,6 +1414,9 @@ function receiveForm(num) {
     return '<div class="rline" data-i="' + i + '"><div class="rh"><b>' + esc(l.name) + '</b><span class="mut">' + rem + ' of ' + l.ordered + ' still to receive</span></div>' +
       '<div class="rrow"><label>Receiving now <input type="number" class="rq num" min="0" value="' + rem + '" data-i="' + i + '" aria-label="Quantity receiving for ' + esc(l.name) + '"></label>' +
       '<label class="chk2"><input type="checkbox" class="noser" data-i="' + i + '"' + (INV.category(l.name) === "Services & Fees" || INV.category(l.name) === "Supplies & Accessories" ? " checked" : "") + '> No serial numbers (number them for me)</label></div>' +
+      '<div class="rmoney"><label>Condition<select class="rcond" data-i="' + i + '">' + CONDS.map(function (c) { var p0 = S.products[l.slug]; return '<option value="' + c[0] + '"' + (p0 && guessCond(p0.name) === c[0] ? " selected" : "") + '>' + c[1] + '</option>'; }).join("") + '</select></label>' +
+      '<label>Cost each (locked after receive)<input type="number" class="rcost num" min="0" step="0.01" data-i="' + i + '" value="' + (l.cost != null ? l.cost : "") + '"></label>' +
+      '<label>Sell price each (locked after receive)<input type="number" class="rprice num" min="0" step="0.01" data-i="' + i + '" placeholder="' + (S.products[l.slug] && S.products[l.slug].price > 0 ? S.products[l.slug].price + " (default)" : "use item default") + '"></label></div>' +
       '<div class="serials" data-i="' + i + '"></div></div>';
   }).join("");
   modal("Receive items · PO " + po.num, '<p class="mut">Scan or type one serial per box. Enter jumps to the next box.</p>' + body +
@@ -1216,16 +1433,22 @@ function receiveForm(num) {
           if (!s) { problem = "Enter a serial for every unit of " + l.name + ", or tick No serial numbers."; return; }
           var key = s.toLowerCase();
           if (seen[key] || idx[key]) { problem = "Serial " + s + " is already in inventory or entered twice."; return; }
-          seen[key] = 1; add.push({ slug: l.slug, serial: s });
+          seen[key] = 1; add.push({ slug: l.slug, serial: s, cond: document.querySelector('.rcond[data-i="' + i + '"]').value, cost: Number(document.querySelector('.rcost[data-i="' + i + '"]').value) || null, price: Number(document.querySelector('.rprice[data-i="' + i + '"]').value) || null });
         }
       });
       if (problem) { toast(problem); return false; }
       if (!add.length) { toast("Nothing to receive. Set a quantity first."); return false; }
       var touched = {};
-      add.forEach(function (a) { S.products[a.slug].units.push({ id: uid(), serial: a.serial, po: po.num, status: "available", to: "", since: "", history: [ev({ t: "received", po: po.num, at: at, receivedBy: by })] }); touched[a.slug] = 1; });
+      add.forEach(function (a) {
+        var pr = S.products[a.slug];
+        pr.units.push({ id: uid(), serial: a.serial, po: po.num, status: "available", to: "", since: "", cond: a.cond, cost: a.cost, price: a.price || defPrice(pr, a.cond), history: [ev({ t: "received", po: po.num, at: at, receivedBy: by, note: condLabel(a.cond) + (a.cost ? " · cost " + M(a.cost) : " · no cost yet") + ((a.price || defPrice(pr, a.cond)) ? " · sells for " + M(a.price || defPrice(pr, a.cond)) : " · no sell price yet") })] });
+        // a new batch at a different cost becomes the item's buy cost for future orders; older units keep what they cost
+        if (a.cond === "new" && a.cost > 0 && Number(pr.cost) !== a.cost) { pr.history = pr.history || []; pr.history.push(ev({ t: "cost", from: Number(pr.cost), to: a.cost, at: at })); pr.cost = a.cost; }
+        touched[a.slug] = 1;
+      });
       var summary = {}; add.forEach(function (a) { var nm = S.products[a.slug].name; summary[nm] = (summary[nm] || 0) + 1; });
       po.history = po.history || []; po.history.push(ev({ t: "po-received", at: at, receivedBy: by, qty: add.length, note: Object.keys(summary).map(function (k) { return summary[k] + " × " + k; }).join(", ") })); savePO(po.num);
-      Object.keys(touched).forEach(saveProduct); render(); toast(add.length + " units added to inventory from PO " + po.num);
+      Object.keys(touched).forEach(saveProduct); render(); toast(add.length + (add.length === 1 ? " unit" : " units") + " added to inventory from PO " + po.num);
     }, true);
   [].forEach.call(document.querySelectorAll(".rq,.noser"), function (el) { el.addEventListener("input", function () { drawSerials(el.dataset.i); }); el.addEventListener("change", function () { drawSerials(el.dataset.i); }); });
   po.lines.forEach(function (l, i) { drawSerials(i); });
@@ -1239,6 +1462,7 @@ function drawSerials(i) {
   box.innerHTML = h;
 }
 document.addEventListener("keydown", function (e) {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("tile") && e.target.dataset.act) { e.preventDefault(); e.target.click(); return; }
   if (e.key === "Enter" && e.target.classList && e.target.classList.contains("sn")) {
     e.preventDefault(); var all = [].slice.call(document.querySelectorAll(".sn")), n = all[all.indexOf(e.target) + 1]; if (n) n.focus(); else $("fRecv").focus();
   }
@@ -1257,7 +1481,11 @@ document.addEventListener("click", function (e) {
     case "open-merchant": go("at-" + a.dataset.slug); break;
     case "open-unit": openUnit(a.dataset.id); break;
     case "close-unit": closeUnit(); break;
-    case "filter": ui.filter = a.dataset.f; if (view.name !== "inventory") go("inventory"); else renderProdTable(); break;
+    case "filter":
+      ui.filter = a.dataset.f;
+      if (a.classList.contains("tile") || a.classList.contains("kv")) { ui.q = ""; ui.cat = ""; if (a.dataset.sort) ui.sort = { k: a.dataset.sort, d: -1 }; else if (a.dataset.f !== "all") ui.sort = { k: "status", d: 1 }; }
+      if (view.name !== "inventory") go("inventory"); else if (a.classList.contains("tile") || a.classList.contains("kv")) { render(); scrollToItems(); } else renderProdTable();
+      break;
     case "sort": var k = a.dataset.k; ui.sort = { k: k, d: ui.sort.k === k ? -ui.sort.d : (k === "name" || k === "status" ? 1 : -1) }; render(); break;
     case "ufilter": ui.unitFilter = a.dataset.f; render(); break;
     case "assign": e.stopPropagation(); assignForm(a.dataset.id, "assign"); break;
@@ -1272,6 +1500,8 @@ document.addEventListener("click", function (e) {
     case "del-line": var rows = document.querySelectorAll(".pline"); if (rows.length > 1) a.closest(".pline").remove(); break;
     case "check": showCheck(a.dataset.k); break;
     case "restock-pdf": restockPdf(); break;
+    case "set-margin": marginForm(); break;
+    case "edit-unit-money": unitMoneyForm(a.dataset.id); break;
   }
 });
 document.addEventListener("input", function (e) {
@@ -1283,6 +1513,24 @@ document.addEventListener("input", function (e) {
 document.addEventListener("change", function (e) {
   var t = e.target;
   if (t.id === "cat") { ui.cat = t.value; renderProdTable(); }
+  if (t.classList.contains("cpi")) {
+    var cp = S.products[t.dataset.slug], cnd = t.dataset.cond, v2 = Number(t.value), oldv = cp.priceBy && cp.priceBy[cnd] > 0 ? cp.priceBy[cnd] : null, nv = t.value.trim() === "" || !(v2 > 0) ? null : v2;
+    cp.priceBy = cp.priceBy || {}; if (nv === oldv) return;
+    rememberMe(); if (nv) cp.priceBy[cnd] = nv; else delete cp.priceBy[cnd]; var st2 = stampPrices(cp);
+    cp.history = cp.history || []; cp.history.push(ev({ t: "cond-price", cond: cnd, from: oldv, to: nv, at: today(), note: st2 ? st2 + " unpriced unit(s) got this price" : "" })); saveProduct(cp.slug); render();
+    toast(condLabel(cnd) + " " + cp.name + (nv ? " sells for " + M(nv) : " uses the main sell price")); return;
+  }
+  if (t.classList.contains("pi") || t.classList.contains("mg")) {
+    var pp = S.products[t.dataset.slug], raw = t.value.trim(), oldP = pp.price != null ? pp.price : null, np;
+    if (raw === "") np = null;
+    else if (t.classList.contains("pi")) { np = Number(raw); if (!(np > 0)) np = null; }
+    else { var mv = Number(raw); if (!(mv < 100)) { toast("Margin must be below 100%."); render(); return; } np = pp.cost > 0 ? Math.round(pp.cost / (1 - mv / 100) * 100) / 100 : null; if (np == null) { toast("Set a cost for " + pp.name + " first."); render(); return; } }
+    var stamped = 0;
+    if (np !== oldP) { rememberMe(); pp.price = np; stamped = stampPrices(pp); pp.history = pp.history || []; pp.history.push(ev({ t: "price", from: oldP, to: np, at: today(), note: stamped ? stamped + " unpriced unit" + (stamped > 1 ? "s" : "") + " got this price" : "" })); saveProduct(pp.slug); }
+    render(); var mm = INV.margin(pp.cost, pp.price);
+    toast(np == null ? "Cleared default sell price for " + pp.name : pp.name + ": new stock sells for " + M(np) + " · " + INV.pct(mm) + (stamped ? " · priced " + stamped + " unit" + (stamped > 1 ? "s" : "") : " · existing units keep their price"));
+    return;
+  }
   if (t.classList.contains("mi") || t.id === "itemMin") { var p = S.products[t.dataset.slug]; var v = parseInt(t.value, 10); var old = p.min; p.min = v > 0 ? v : null; if (old !== p.min) { rememberMe(); p.history = p.history || []; p.history.push(ev({ t: "min", from: old, to: p.min, at: today() })); } saveProduct(p.slug); render(); toast(p.min ? p.name + " alerts below " + p.min : "Stopped watching " + p.name); }
 });
 document.addEventListener("click", function (e) { if (e.target.closest("[data-stop]") && e.target.closest(".mi")) e.stopPropagation(); }, true);
@@ -1351,7 +1599,7 @@ if (!DEMO && window.claude && window.claude.use) {
       clearTimeout(timer);
       if (!gotP.length) { S.mode = "empty"; showSetup(); return; }
       var prods = {}; gotP.forEach(function (x) { prods[x.slug] = x; }); var pos = {}; gotO.forEach(function (x) { pos[x.num] = x; });
-      S.products = prods; S.pos = pos; S.mode = "db"; hideSetup(); setSync("Shared · saved for everyone on this page", true); render();
+      migrate(prods); S.products = prods; S.pos = pos; S.mode = "db"; hideSetup(); setSync("Shared · saved for everyone on this page", true); render();
     }
     d.collection("products").limit(1000).onSnapshot(function (snap) { if (snap.metadata.fromCache && !snap.size) return; gotP = snap.docs.map(function (x) { return x.data(); }); got.p = true; both(); }, function () { setSync("Shared data unavailable", false); });
     d.collection("pos").limit(1000).onSnapshot(function (snap) { if (snap.metadata.fromCache && !snap.size) return; gotO = snap.docs.map(function (x) { return x.data(); }); got.o = true; both(); }, function () {});
