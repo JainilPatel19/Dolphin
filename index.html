@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dolphin Inventory Demo</title>
+<title>Dolphin Inventory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{
   /* Layout: sticky top bar, summary tiles, attention panel beside category breakdown, then a dense operable item table. */
-  --bg:#f3f5f9; --surface:#ffffff; --ink:#18212f; --muted:#667085; --line:#e3e8ef; --accent:#1d5fd1; --accent-soft:#e8effc;
+  --bg:#f3f5f9; --surface:#ffffff; --ink:#18212f; --muted:#667085; --line:#e3e8ef; --accent:#0b3d91; --accent-soft:#e6edf9;
   --red:#c42b2b; --red-soft:#fdecec; --amber:#b26a00; --amber-soft:#fff4e0; --green:#18794e; --green-soft:#e6f5ec; --grey-soft:#f0f2f6;
-  --display:"Manrope",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --display:"Nunito",system-ui,sans-serif; --body:"Nunito",system-ui,sans-serif; --brand:#0a2e6e; --brand-2:#1764d8; --mono:"IBM Plex Mono",ui-monospace,monospace;
   --shadow:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
   color-scheme:light;
 }
@@ -33,7 +33,20 @@ button,input,select{font:inherit;color:inherit}
 .wrap{max-width:1320px;margin:0 auto;padding:0 20px 48px}
 
 /* top bar */
-.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:20;background:var(--brand);border-bottom:3px solid var(--brand-2);color:#fff}
+.top .brand small,.top .brand small *{color:rgba(255,255,255,.72)}
+.top .logo{background:#fff;color:var(--brand)}
+.top .tab{color:rgba(255,255,255,.78)}
+.top .tab:hover{color:#fff;background:rgba(255,255,255,.12)}
+.top .tab.on{color:#fff;background:rgba(255,255,255,.18)}
+.top .btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28);color:#fff}
+.top .btn:hover{background:rgba(255,255,255,.16);border-color:#fff;color:#fff}
+.top .btn.primary{background:#fff;border-color:#fff;color:var(--brand);font-weight:700}
+.top .btn.primary:hover{filter:none;background:#eaf1ff;color:var(--brand)}
+.top .gsearch input{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#fff}
+.top .gsearch input::placeholder{color:rgba(255,255,255,.65)}
+.top .gsearch svg{color:rgba(255,255,255,.7)}
+.top .bell .badge{border:2px solid var(--brand)}
 .top .wrap{display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 .logo{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;color:#fff}
@@ -71,7 +84,7 @@ button,input,select{font:inherit;color:inherit}
 .panel h2{font:700 15px/1.2 var(--display);margin:0}
 .ph{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .ph .sub{color:var(--muted);font-size:12.5px;margin-left:auto}
-.alist{max-height:330px;overflow:auto}
+.alist{max-height:420px;overflow:auto}
 .aitem{display:grid;grid-template-columns:1fr 150px 92px;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line)}
 .aitem:last-child{border-bottom:0}
 .aitem .nm{font-weight:600}
@@ -283,13 +296,13 @@ a.note:hover{background:var(--grey-soft)}
   <div class="wrap">
     <a class="brand" href="#inventory" style="text-decoration:none;color:inherit;margin-right:8px">
       <div class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></div>
-      <div><h1 style="font-size:17px">Dolphin Inventory <span style="font-size:11px;background:var(--green-soft);color:var(--green);padding:2px 7px;border-radius:10px;vertical-align:2px">DEMO</span></h1><small><span class="syncdot" id="syncdot"></span><span id="sync"></span></small></div>
+      <div><h1 style="font-size:17px">Dolphin Inventory</h1><small><span class="syncdot" id="syncdot"></span><span id="sync"></span></small></div>
     </a>
     <nav class="tabs" id="nav" aria-label="Sections"></nav>
     <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="gsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="search" type="search" placeholder="Find serial, PO or merchant" aria-label="Find serial, PO or merchant"></div>
-      <button class="btn mechip" id="meWrap" type="button" aria-label="Who your changes are recorded as"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span id="meChip"></span></button>
-      <button class="btn" id="bPdf" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>PDF report</span></button>
+      <button class="btn primary" id="bRestock" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>Restock PDF</span></button>
+      <button class="btn" id="bPdf" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Full report</span></button>
       <button class="btn bell" id="bBell" type="button" aria-label="Low stock notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="badge" id="badge" hidden>0</span></button>
     </div>
   </div>
@@ -346,7 +359,7 @@ var INV = (function () {
       if (item.available < Number(min)) return { key: "low", label: "Low stock", alert: true };
       return { key: "ok", label: "Healthy", alert: false };
     }
-    if (item.available === 0) return { key: "none", label: "None available", alert: false };
+    if (item.available === 0) return { key: "out", label: "Out of stock", alert: false };
     return { key: "idle", label: "In stock", alert: false };
   }
 
@@ -387,7 +400,7 @@ var INV = (function () {
     var s = summarize(items, mins), groups = byCategory(items);
     var doc = new jsPDF({ unit: "pt", format: "letter" });
     var W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 40;
-    var NAVY = [14, 36, 74], BLUE = [24, 92, 210], INK = [28, 35, 48], MUTED = [104, 115, 133], LINE = [225, 230, 238],
+    var NAVY = [10, 46, 110], BLUE = [23, 100, 216], INK = [28, 35, 48], MUTED = [104, 115, 133], LINE = [225, 230, 238],
         RED = [190, 38, 38], AMBER = [181, 108, 0], GREEN = [24, 122, 72], TINT = [244, 247, 252];
     var dateStr = when.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) + "  " +
       when.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
@@ -395,10 +408,13 @@ var INV = (function () {
     // Header band
     doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(0, 0, W, 84, "F");
     doc.setFillColor(BLUE[0], BLUE[1], BLUE[2]); doc.rect(0, 84, W, 4, "F");
-    doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(20);
-    doc.text("Inventory Report", M, 42);
-    doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(190, 205, 230);
-    doc.text("Dolphin Merchant Services  |  Operations", M, 62);
+    doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setCharSpace(1.6);
+    doc.text("DOLPHIN", M, 26); doc.setCharSpace(0);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(190, 205, 230); doc.text("Merchant Services", M + 64, 26);
+    doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(21);
+    doc.text("Inventory Report", M, 54);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); doc.setTextColor(190, 205, 230);
+    doc.text("Stock, value and items below minimum", M, 71);
     doc.setTextColor(255, 255, 255); doc.setFontSize(9);
     doc.text("Generated", W - M, 38, { align: "right" });
     doc.setFont("helvetica", "bold"); doc.setFontSize(10.5); doc.text(dateStr, W - M, 54, { align: "right" });
@@ -412,7 +428,7 @@ var INV = (function () {
       ["Inventory value", money(s.value), "at unit cost"],
       ["Available value", money(s.availValue), "sitting on the shelf"],
       ["Low stock", String(s.low), "below your minimum", s.low ? AMBER : GREEN],
-      ["Out of stock", String(s.out), "watched items at zero", s.out ? RED : GREEN]
+      ["Out of stock", String(s.out), "nothing available", s.out ? RED : GREEN]
     ];
     var gap = 10, tw = (W - 2 * M - 2 * gap) / 3, th = 62, y0 = 108;
     tiles.forEach(function (t, i) {
@@ -444,7 +460,7 @@ var INV = (function () {
     function merge(a, b) { var r = {}, k; for (k in a) r[k] = a[k]; for (k in b) r[k] = b[k]; return r; }
 
     // Needs attention
-    y = sectionTitle("Needs attention", s.alerts.length ? s.alerts.length + " watched item" + (s.alerts.length > 1 ? "s" : "") + " below minimum" : "", y);
+    y = sectionTitle("Needs attention", s.alerts.length ? s.alerts.length + " item" + (s.alerts.length > 1 ? "s" : "") + " below minimum" : "", y);
     if (s.alerts.length) {
       autoTable(doc, merge(base, {
         startY: y,
@@ -467,7 +483,7 @@ var INV = (function () {
       y += 26;
     } else {
       doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
-      doc.text("All watched items are at or above their minimum.", M, y + 12); y += 36;
+      doc.text("Every item with an alert set is at or above its minimum.", M, y + 12); y += 36;
     }
 
     // Category summary
@@ -528,7 +544,156 @@ var INV = (function () {
     return doc;
   }
 
-  return { category: category, status: status, money: money, summarize: summarize, byCategory: byCategory, buildReport: buildReport, CAT_ORDER: CAT_ORDER };
+
+  /* ---------- Restock PDF: the items we need to order ---------- */
+  function buildRestock(jsPDF, autoTable, o) {
+    var items = o.items, mins = o.mins, when = o.generatedAt || new Date();
+    var s = summarize(items, mins);
+    var doc = new jsPDF({ unit: "pt", format: "letter" });
+    var W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 40;
+    var NAVY = [10, 46, 110], BLUE = [23, 100, 216], INK = [28, 35, 48], MUTED = [104, 115, 133], LINE = [225, 230, 238],
+        RED = [190, 38, 38], AMBER = [181, 108, 0], GREEN = [24, 122, 72], TINT = [244, 247, 252];
+    function fill(c) { doc.setFillColor(c[0], c[1], c[2]); } function ink(c) { doc.setTextColor(c[0], c[1], c[2]); } function draw(c) { doc.setDrawColor(c[0], c[1], c[2]); }
+    var dateStr = when.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    var timeStr = when.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+
+    // Header
+    fill(NAVY); doc.rect(0, 0, W, 84, "F"); fill(BLUE); doc.rect(0, 84, W, 4, "F");
+    ink([255, 255, 255]); doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setCharSpace(1.6);
+    doc.text("DOLPHIN", M, 26); doc.setCharSpace(0);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(190, 205, 230); doc.text("Merchant Services", M + 64, 26);
+    ink([255, 255, 255]); doc.setFont("helvetica", "bold"); doc.setFontSize(21); doc.text("Restock List", M, 54);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); doc.setTextColor(190, 205, 230);
+    doc.text("Items we need to order", M, 71);
+    ink([255, 255, 255]); doc.setFontSize(9); doc.text("Prepared", W - M, 38, { align: "right" });
+    doc.setFont("helvetica", "bold"); doc.setFontSize(10.5); doc.text(dateStr + "  " + timeStr, W - M, 54, { align: "right" });
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.setTextColor(190, 205, 230);
+    doc.text("Order qty brings each item back to its minimum", W - M, 68, { align: "right" });
+
+    var alerts = s.alerts;
+    var units = alerts.reduce(function (t, a) { return t + a.need; }, 0);
+    var cost = alerts.reduce(function (t, a) { return t + a.need * a.item.cost; }, 0);
+    var outN = alerts.filter(function (a) { return a.status.key === "out"; }).length;
+
+    // Tiles
+    var tiles = [
+      ["Items to order", String(alerts.length), outN + " out of stock, " + (alerts.length - outN) + " low", alerts.length ? AMBER : GREEN],
+      ["Units to order", String(units), "to reach your minimums", BLUE],
+      ["Estimated cost", money(cost), "at current unit cost", NAVY]
+    ];
+    var gap = 10, tw = (W - 2 * M - 2 * gap) / 3, th = 62, y = 108;
+    tiles.forEach(function (t, i) {
+      var x = M + i * (tw + gap), c = t[3];
+      fill(TINT); draw(LINE); doc.roundedRect(x, y, tw, th, 5, 5, "FD");
+      fill(c); doc.rect(x, y + 8, 3, th - 16, "F");
+      ink(MUTED); doc.setFont("helvetica", "bold"); doc.setFontSize(7.5); doc.text(t[0].toUpperCase(), x + 14, y + 18);
+      ink(i === 0 ? c : INK); doc.setFontSize(18); doc.text(t[1], x + 14, y + 40);
+      ink(MUTED); doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.text(t[2], x + 14, y + 53);
+    });
+    y += th + 28;
+
+    var base = {
+      theme: "plain", margin: { left: M, right: M, top: 50, bottom: 50 }, showHead: "everyPage",
+      styles: { font: "helvetica", fontSize: 9, cellPadding: { top: 6, bottom: 6, left: 6, right: 6 }, textColor: INK, lineColor: LINE, lineWidth: { bottom: 0.5 }, valign: "middle" },
+      headStyles: { fillColor: NAVY, textColor: [255, 255, 255], fontStyle: "bold", fontSize: 7.8, lineWidth: 0 }
+    };
+    function merge(a, b) { var r = {}, k; for (k in a) r[k] = a[k]; for (k in b) r[k] = b[k]; return r; }
+    function title(t, sub) {
+      if (y > H - 140) { doc.addPage(); y = 60; }
+      ink(INK); doc.setFont("helvetica", "bold"); doc.setFontSize(13); doc.text(t, M, y);
+      if (sub) { doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); ink(MUTED); doc.text(sub, W - M, y, { align: "right" }); }
+      y += 8;
+    }
+
+    if (alerts.length) {
+      title("Order list", "Tick each line as it's ordered and again when it arrives");
+      var groups = {}; alerts.forEach(function (a) { var c = category(a.item.name); (groups[c] = groups[c] || []).push(a); });
+      var body = [];
+      CAT_ORDER.filter(function (c) { return groups[c]; }).forEach(function (c) {
+        var g = groups[c].sort(function (a, b) { return (a.status.key === "out" ? 0 : 1) - (b.status.key === "out" ? 0 : 1) || a.item.name.localeCompare(b.item.name); });
+        var gc = g.reduce(function (t, a) { return t + a.need * a.item.cost; }, 0), gu = g.reduce(function (t, a) { return t + a.need; }, 0);
+        body.push([{ content: c.toUpperCase() + "   ·   " + g.length + " item" + (g.length > 1 ? "s" : "") + ", " + gu + " units, " + money(gc), colSpan: 9, styles: { fillColor: [226, 235, 250], textColor: NAVY, fontStyle: "bold", fontSize: 8, halign: "left" } }]);
+        g.forEach(function (a) {
+          var r = ["", "", a.item.name, a.status.key === "out" ? "Out" : "Low", String(a.item.available), String(a.min), String(a.need), money(a.item.cost), money(a.need * a.item.cost)];
+          r._st = a.status.key; body.push(r);
+        });
+      });
+      autoTable(doc, merge(base, {
+        startY: y + 4,
+        head: [["Ordered", "Received", "Item", "Status", "Have", "Min", "Order", "Unit cost", "Line total"]],
+        body: body,
+        foot: [[{ content: "Total to order", colSpan: 6, styles: { halign: "right" } }, String(units), "", money(cost)]],
+        showFoot: "lastPage",
+        footStyles: { fillColor: TINT, textColor: NAVY, fontStyle: "bold", fontSize: 10, lineWidth: 0 },
+        columnStyles: { 0: { cellWidth: 44, halign: "center" }, 1: { cellWidth: 46, halign: "center" }, 2: { cellWidth: 158, fontStyle: "bold" }, 3: { cellWidth: 40 }, 4: { halign: "right", cellWidth: 34 }, 5: { halign: "right", cellWidth: 30 }, 6: { halign: "right", cellWidth: 40, fontStyle: "bold", fontSize: 11 }, 7: { halign: "right" }, 8: { halign: "right", fontStyle: "bold" } },
+        didParseCell: function (d) {
+          if (d.section === "head" && d.column.index >= 4) d.cell.styles.halign = "right";
+          if (d.section === "head" && d.column.index <= 1) d.cell.styles.halign = "center";
+          if (d.section === "body" && d.column.index === 3 && d.row.raw._st) { d.cell.styles.textColor = d.row.raw._st === "out" ? RED : AMBER; d.cell.styles.fontStyle = "bold"; }
+          if (d.section === "body" && d.column.index === 6 && d.row.raw._st) d.cell.styles.textColor = BLUE;
+        },
+        didDrawCell: function (d) {
+          if (d.section === "body" && d.column.index <= 1 && d.row.raw._st) {
+            var sz = 10, x = d.cell.x + (d.cell.width - sz) / 2, yy = d.cell.y + (d.cell.height - sz) / 2;
+            draw([150, 160, 178]); doc.setLineWidth(0.9); doc.roundedRect(x, yy, sz, sz, 1.5, 1.5, "S");
+          }
+        }
+      }));
+      y = doc.lastAutoTable.finalY + 30;
+    } else {
+      title("Order list");
+      ink(GREEN); doc.setFont("helvetica", "bold"); doc.setFontSize(11);
+      doc.text("Nothing to order. Every item with an alert set is at or above its minimum.", M, y + 16); y += 46;
+    }
+
+    // Also at zero but not watched
+    var zero = items.filter(function (it) { return it.available === 0 && (mins[it.name] == null) && !/fee|service|firmware|injection|license|storage|test item/i.test(it.name); })
+      .sort(function (a, b) { return b.cost - a.cost; });
+    if (zero.length) {
+      title("Also out of stock, no alert set", zero.length + " items  ·  set a minimum to add them to the order list");
+      autoTable(doc, merge(base, {
+        startY: y + 4,
+        head: [["Item", "Category", "Assigned out", "Unit cost"]],
+        body: zero.map(function (it) { return [it.name, category(it.name), String(it.assigned), money(it.cost)]; }),
+        headStyles: { fillColor: [235, 240, 248], textColor: [70, 82, 102], fontStyle: "bold", fontSize: 7.5 },
+        styles: merge(base.styles, { fontSize: 8.4, textColor: [70, 82, 102], cellPadding: { top: 4, bottom: 4, left: 6, right: 6 } }),
+        columnStyles: { 0: { cellWidth: 230 }, 2: { halign: "right" }, 3: { halign: "right" } },
+        didParseCell: function (d) { if (d.section === "head" && d.column.index >= 2) d.cell.styles.halign = "right"; }
+      }));
+      y = doc.lastAutoTable.finalY + 30;
+    }
+
+    // Sign-off block
+    if (y > H - 130) { doc.addPage(); y = 70; }
+    fill(TINT); draw(LINE); doc.roundedRect(M, y, W - 2 * M, 84, 6, 6, "FD");
+    var fields = [["Requested by", M + 16], ["Approved by", M + 16 + (W - 2 * M - 32) / 2]];
+    var fields2 = [["PO number", M + 16], ["Date ordered", M + 16 + (W - 2 * M - 32) / 2]];
+    var fw = (W - 2 * M - 32) / 2 - 20;
+    [[fields, y + 32], [fields2, y + 68]].forEach(function (row) {
+      row[0].forEach(function (f) {
+        ink(MUTED); doc.setFont("helvetica", "bold"); doc.setFontSize(7.5); doc.text(f[0].toUpperCase(), f[1], row[1] - 14);
+        draw([170, 178, 192]); doc.setLineWidth(0.7); doc.line(f[1], row[1], f[1] + fw, row[1]);
+      });
+    });
+
+    // Footer on every page
+    var n = doc.internal.getNumberOfPages();
+    for (var p = 1; p <= n; p++) {
+      doc.setPage(p);
+      if (p > 1) {
+        doc.setFont("helvetica", "bold"); doc.setFontSize(9); ink(NAVY); doc.text("Restock List", M, 30);
+        doc.setFont("helvetica", "normal"); ink(MUTED); doc.text(dateStr, W - M, 30, { align: "right" });
+        draw(LINE); doc.setLineWidth(0.6); doc.line(M, 37, W - M, 37);
+      }
+      draw(LINE); doc.setLineWidth(0.6); doc.line(M, H - 34, W - M, H - 34);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); ink(MUTED);
+      doc.text("Dolphin Merchant Services  |  Internal use", M, H - 20);
+      doc.text("Page " + p + " of " + n, W - M, H - 20, { align: "right" });
+    }
+    return doc;
+  }
+
+  return { category: category, status: status, money: money, summarize: summarize, byCategory: byCategory, buildReport: buildReport, buildRestock: buildRestock, CAT_ORDER: CAT_ORDER };
 })();
 if (typeof module !== "undefined") module.exports = INV;
 
@@ -677,8 +842,7 @@ function render() {
 /* ---------- Inventory ---------- */
 function tile(k, v, s, cls, f) { return '<div class="tile ' + (cls || "") + (f ? " click" : "") + '"' + (f ? ' data-act="filter" data-f="' + f + '" role="button" tabindex="0"' : "") + '><div class="k">' + k + '</div><div class="v num">' + v + '</div><div class="s">' + s + '</div></div>'; }
 function vInventory(s) {
-  var dc = dataChecks();
-  var att = s.alerts.length ? s.alerts.slice(0, 8).map(function (a) {
+  var att = s.alerts.length ? s.alerts.map(function (a) {
     var out = a.status.key === "out", p = S.products[slugify(a.item.name)] || plist().filter(function (x) { return x.name === a.item.name; })[0];
     return '<a class="aitem" href="#item-' + p.slug + '"><div><div class="nm">' + esc(a.item.name) + '</div><div class="cat">' + a.item.available + ' available, minimum ' + a.min + '</div></div>' +
       '<div class="bar"><i style="width:' + Math.min(100, a.item.available / a.min * 100) + '%;background:var(--' + (out ? "red" : "amber") + ')"></i></div>' +
@@ -691,17 +855,10 @@ function vInventory(s) {
       tile("Assigned", s.assigned, merchants().length + " merchants", "", "") +
       tile("Inventory value", M(s.value), M(s.availValue) + " available") +
       tile("Low stock", s.low, "below your minimum", s.low ? "warn" : "", "attn") +
-      tile("Out of stock", s.out, "watched items at zero", s.out ? "crit" : "", "attn") +
+      tile("Out of stock", s.out, "nothing available", s.out ? "crit" : "", "zero") +
     '</div>' +
-    '<div class="row2">' +
-      '<section class="panel"><div class="ph"><h2>Needs restocking</h2><span class="sub">' + s.alerts.length + ' of ' + s.watched + ' watched items</span></div><div class="alist">' + att + '</div></section>' +
-      '<section class="panel"><div class="ph"><h2>Data checks</h2><span class="sub">fix these in the portal</span></div><div class="checks">' +
-        check(dc.dupUnits, "units share a serial number with another unit", "dup") +
-        check(dc.noPO, "units have no purchase order", "nopo") +
-        check(dc.dummy, "units have placeholder serials (dummydata…)", "dummy") +
-        '<div class="chk ok"><b class="num">' + Object.keys(S.pos).length + '</b><span>purchase orders linked to inventory</span></div>' +
-      '</div></section>' +
-    '</div>' +
+    '<section class="panel" style="margin-top:16px"><div class="ph"><h2>Needs restocking</h2><span class="sub">' + s.alerts.length + ' of ' + s.watched + ' items with an alert set</span>' +
+        (s.alerts.length ? '<button class="btn sm primary" type="button" data-act="restock-pdf" style="margin-left:12px">Restock PDF</button>' : "") + '</div><div class="alist">' + att + '</div></section>' +
     '<section class="panel" style="margin-top:16px"><div class="ph"><h2>All items</h2><span class="sub">Click an item to see every unit, its PO and who has it.</span></div>' +
       '<div class="tools"><div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="q" type="search" placeholder="Search items" aria-label="Search items" value="' + esc(ui.q) + '"></div>' +
       '<div class="chips" id="chips"></div><select class="sel" id="cat" aria-label="Category"><option value="">All categories</option>' + INV.CAT_ORDER.map(function (c) { return '<option' + (ui.cat === c ? " selected" : "") + '>' + c + '</option>'; }).join("") + '</select></div>' +
@@ -717,7 +874,7 @@ function prodRows() {
 }
 function renderProdTable() {
   var all = prodRows().filter(function (x) { return !(S.settings.hideSvc && x.cat === "Services & Fees"); });
-  var defs = [["all", "All"], ["attn", "Needs restocking"], ["watched", "Watched"], ["zero", "None available"], ["instock", "In stock"]];
+  var defs = [["all", "All"], ["attn", "Needs restocking"], ["watched", "Alert set"], ["zero", "Out of stock"], ["instock", "In stock"]];
   var fn = { all: function () { return true; }, attn: function (x) { return x.st.alert; }, watched: function (x) { return x.p.min != null; }, zero: function (x) { return x.it.available === 0; }, instock: function (x) { return x.it.available > 0; } };
   $("chips").innerHTML = defs.map(function (d) { return '<button class="chip" type="button" data-act="filter" data-f="' + d[0] + '" aria-pressed="' + (ui.filter === d[0]) + '">' + d[1] + '<span class="c">' + all.filter(fn[d[0]]).length + '</span></button>'; }).join("");
   var q = ui.q.trim().toLowerCase();
@@ -1103,6 +1260,7 @@ document.addEventListener("click", function (e) {
     case "add-line": var wrap = $("plines"); var d = document.createElement("div"); d.innerHTML = lineTemplate({ name: "", ordered: 1, cost: "" }, wrap.children.length); wrap.appendChild(d.firstChild); wrap.lastChild.querySelector(".ln").focus(); break;
     case "del-line": var rows = document.querySelectorAll(".pline"); if (rows.length > 1) a.closest(".pline").remove(); break;
     case "check": showCheck(a.dataset.k); break;
+    case "restock-pdf": restockPdf(); break;
   }
 });
 document.addEventListener("input", function (e) {
@@ -1148,22 +1306,31 @@ $("search").addEventListener("keydown", function (e) {
   var m = merchants().filter(function (x) { return x.name.toLowerCase().indexOf(v) >= 0; })[0]; if (m) { go("at-" + m.slug); this.value = ""; return; }
   toast("No serial, PO or merchant matches \"" + this.value + "\"");
 });
-$("bPdf").onclick = function () {
-  if (!window.jspdf || !window.jspdf.jsPDF) { toast("The PDF tool didn't load. Check your connection and reload."); return; }
-  var doc = INV.buildReport(window.jspdf.jsPDF, function (d, o) { return d.autoTable(o); }, { items: asItems(), mins: mins(), generatedAt: new Date(), source: "Source: Dolphin Inventory" });
-  var name = "Inventory-Report-" + today() + ".pdf", blob = new Blob([doc.output("arraybuffer")], { type: "application/pdf" });
-  var fallback = function () { var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.target = "_blank"; a.rel = "noopener"; a.click(); toast("Report opened in a new tab"); };
+function savePdf(doc, name) {
+  var blob = new Blob([doc.output("arraybuffer")], { type: "application/pdf" });
+  var fallback = function () { var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.target = "_blank"; a.rel = "noopener"; a.click(); toast("PDF opened in a new tab"); };
   if (window.claude && window.claude.use) window.claude.use("downloads").then(function (dl) {
     if (!dl) return fallback();
-    return dl.save({ filename: name, data: blob }).then(function () { toast("Report saved: " + name); }, function (e) { if (e && e.code === "declined") toast("Download cancelled"); else fallback(); });
+    return dl.save({ filename: name, data: blob }).then(function () { toast("Saved: " + name); }, function (e) { if (e && e.code === "declined") toast("Download cancelled"); else fallback(); });
   }).catch(fallback); else fallback();
+}
+function pdfReady() { if (!window.jspdf || !window.jspdf.jsPDF) { toast("The PDF tool didn't load. Check your connection and reload."); return false; } return true; }
+var AT = function (d, o) { return d.autoTable(o); };
+$("bPdf").onclick = function () {
+  if (!pdfReady()) return;
+  savePdf(INV.buildReport(window.jspdf.jsPDF, AT, { items: asItems(), mins: mins(), generatedAt: new Date(), source: "Source: Dolphin Inventory" }), "Inventory-Report-" + today() + ".pdf");
 };
+function restockPdf() {
+  if (!pdfReady()) return;
+  savePdf(INV.buildRestock(window.jspdf.jsPDF, AT, { items: asItems(), mins: mins(), generatedAt: new Date() }), "Restock-List-" + today() + ".pdf");
+}
+$("bRestock").onclick = restockPdf;
 
 var tt; function toast(msg) { var t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove("on"); }, 3200); }
 
 /* ================= shared database ================= */
 function setSync(text, ok) { $("sync").textContent = text; $("syncdot").className = "syncdot" + (ok ? " ok" : ""); }
-setSync(DEMO ? "Demo · your changes stay in your browser" : "Working on this device", false);
+setSync("Saved in this browser", false);
 if (!DEMO && window.claude && window.claude.use) {
   window.claude.use("db").then(function (d) {
     if (!d) return;
@@ -1214,8 +1381,8 @@ function resolveNames() {
   USER.profiles(list).then(function (ps) { var changed = false; list.forEach(function (id) { if (ps[id] && ps[id].name) { NAMES[id] = ps[id].name; changed = true; } else NAMES[id] = NAMES[id] || "Someone"; }); if (changed) render(); });
 }
 var _render = render; render = function () { _render(); renderMe(); setTimeout(resolveNames, 0); };
-function renderMe() { var el = $("meChip"); if (!el) return; el.textContent = ME.uid ? (NAMES[ME.uid] || "You") : (me ? me + " (not verified)" : "Set your name"); el.title = ME.uid ? "Signed in with your Claude account. Every change you make is recorded under this name." : "Not signed in here. Changes use the name you type."; }
-$("meChip").onclick = function () { if (ME.uid) { toast("Recorded as " + (NAMES[ME.uid] || "you") + " from your Claude account."); return; } modal("Your name", field("fBy", "Name to record on your changes", '<input id="fBy" required value="' + esc(me) + '">'), "Save", function () { rememberMe(); renderMe(); }); };
+function renderMe() { var el = $("meChip"); if (!el) return; return; el.textContent = ME.uid ? (NAMES[ME.uid] || "You") : (me ? me + " (not verified)" : "Set your name"); el.title = ME.uid ? "Signed in with your Claude account. Every change you make is recorded under this name." : "Not signed in here. Changes use the name you type."; }
+if ($("meChip")) $("meChip").onclick = function () { if (ME.uid) { toast("Recorded as " + (NAMES[ME.uid] || "you") + " from your Claude account."); return; } modal("Your name", field("fBy", "Name to record on your changes", '<input id="fBy" required value="' + esc(me) + '">'), "Save", function () { rememberMe(); renderMe(); }); };
 if (window.claude && window.claude.use) window.claude.use("user").then(function (u) {
   if (!u) return; USER = u;
   u.me().then(function (m) { if (m && m.id) { ME.uid = m.id; ME.color = m.color; if (m.name) NAMES[m.id] = m.name; STAMP = { uid: m.id }; render(); } });
@@ -1231,7 +1398,7 @@ function demoPanel() {
     '<button class="btn" type="button" id="bReset">Reset demo</button>';
   $("bReset").onclick = function () { if (this.dataset.arm !== "1") { this.dataset.arm = "1"; this.textContent = "Click again to reset"; return; } try { localStorage.removeItem(LKEY); } catch (e) {} var b = buildFromSeed(); S.products = b.products; S.pos = b.pos; go("inventory"); render(); toast("Demo reset to the starting data"); };
 }
-var _r2 = render; render = function () { _r2(); demoPanel(); };
+
 route();
 })();
 
